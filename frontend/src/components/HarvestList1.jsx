@@ -167,7 +167,7 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
       <div className="mb-6">
         {paginatedKeys.map(cropName => (
           <div key={cropName} className="mb-4">
-            <h2 className="text-md font-semibold text-gray-100 mb-2 flex items-center">
+            <h2 className="text-md font-semibold text-gray-100 mb-2 flex items-center uppercase">
               <FontAwesomeIcon icon={faLeaf} className="text-green-500 mr-1 text-sm" />
               {cropName}
             </h2>
