@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -138,6 +138,16 @@ const RegisterForm = () => {
 
           {/* Right Side - Form */}
           <div className="md:w-1/2 p-8 md:p-10">
+            {/* Back Link */}
+            <div className="mb-4">
+              <button
+                type="button"
+                onClick={() => navigate("/")}
+                className="text-green-400 hover:text-green-300 font-medium flex items-center gap-1"
+              >
+                <FontAwesomeIcon icon={faArrowLeft} /> Back
+              </button>
+            </div>
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-green-400 mb-2">
                 Create Your Account

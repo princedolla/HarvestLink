@@ -57,7 +57,8 @@ const HomePage = () => {
           {
             pageLanguage: "rw", // Default page language: Kinyarwanda
             includedLanguages: "en,fr,es,de,ru,rw,zh-CN",
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            layout:
+              window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false,
           },
           "google_translate_element"
@@ -99,7 +100,9 @@ const HomePage = () => {
   };
 
   const showPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + selectedImages.length) % selectedImages.length);
+    setCurrentIndex(
+      (prev) => (prev - 1 + selectedImages.length) % selectedImages.length
+    );
   };
 
   const toggleMobileMenu = () => {
@@ -199,12 +202,12 @@ const HomePage = () => {
         )}
 
         {/* Announcement Marquee - Hidden on small screens */}
-        <div className="hidden sm:block bg-green-600 text-white overflow-hidden whitespace-nowrap py-2 border-b border-green-700">
-          <marquee behavior="scroll" direction="left" scrollamount="6">
+        <div className="hidden sm:block bg-green-600 text-white overflow-hidden whitespace-nowrap py-2 border-b border-green-700 relative">
+          <div className="inline-block animate-marquee">
             📢 New season harvests now available! | 📝 Register now to connect
             directly with farmers | 🚜 HarvestLink — Empowering Farmers
             Everywhere!
-          </marquee>
+          </div>
         </div>
       </nav>
 
@@ -222,10 +225,20 @@ const HomePage = () => {
       >
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white flex items-center justify-center gap-2">
+          <h2
+            className="
+                text-2xl        
+                sm:text-3xl     
+                md:text-4xl     
+                lg:text-5xl     
+                font-bold mb-4 text-white 
+                flex items-center justify-center gap-2
+              "
+          >
             Welcome to HarvestLink{" "}
             <FontAwesomeIcon icon={faTractor} className="text-green-400" />
           </h2>
+
           <p className="text-base sm:text-lg text-gray-200 mb-6 flex items-center justify-center gap-2">
             <FontAwesomeIcon icon={faHandshake} className="text-green-400" />{" "}
             Connecting farmers directly with buyers

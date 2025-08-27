@@ -4,7 +4,11 @@ import axios from "axios";
 import { API_URL } from "../config";
 import { FiLogIn, FiUser, FiLock, FiAlertCircle } from "react-icons/fi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -45,6 +49,16 @@ const Login = () => {
         className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md border border-gray-700"
       >
         <div className="flex flex-col items-center mb-8">
+          {/* Back Link */}
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1"
+            >
+              <FontAwesomeIcon icon={faArrowLeft} /> Back
+            </button>
+          </div>
           <div className="bg-blue-600 p-3 rounded-full mb-4">
             <FiLogIn className="text-white text-2xl" />
           </div>
