@@ -226,7 +226,7 @@ const FarmerProfile = () => {
                   )}
                   <div className="p-2 sm:p-3">
                     <div className="flex justify-between items-start mb-1">
-                      <h4 className="text-xs sm:text-sm font-semibold text-gray-100 line-clamp-1">{harvest.cropName}</h4>
+                      <h4 className="text-xs sm:text-sm font-semibold text-gray-100 line-clamp-1 uppercase">{harvest.cropName}</h4>
                       <span className="text-xs bg-green-900 text-green-300 px-1 py-0.5 rounded whitespace-nowrap">
                         {harvest.cropType}
                       </span>
