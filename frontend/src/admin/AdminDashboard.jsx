@@ -517,7 +517,7 @@ const AdminDashboard = () => {
                     sortedAndFilteredHarvests.length > 0 ? (
                       sortedAndFilteredHarvests.map((h) => (
                         <tr key={h._id} className="hover:bg-gray-700">
-                          <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-blue-400">
+                          <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-blue-400 uppercase">
                             {h.cropName}
                           </td>
                           <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-300">

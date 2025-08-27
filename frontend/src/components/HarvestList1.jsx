@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
   faSyncAlt,
@@ -11,11 +11,10 @@ import {
   faWeightHanging,
   faLeaf,
   faEdit,
-  faTrash
-} from '@fortawesome/free-solid-svg-icons';
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 const HarvestList = ({ harvests, onDelete, onEditClick }) => {
-
   // State management
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -34,10 +33,16 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
 
   // Filter and sort logic (same as before)
   const filteredHarvests = harvests
-    .filter(harvest => harvest.cropName.toLowerCase().includes(searchTerm.toLowerCase()))
-    .filter(harvest => selectedType ? harvest.cropType === selectedType : true)
-    .filter(harvest => selectedCurrency ? harvest.currency === selectedCurrency : true)
-    .filter(harvest => {
+    .filter((harvest) =>
+      harvest.cropName.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((harvest) =>
+      selectedType ? harvest.cropType === selectedType : true
+    )
+    .filter((harvest) =>
+      selectedCurrency ? harvest.currency === selectedCurrency : true
+    )
+    .filter((harvest) => {
       const quantity = parseFloat(harvest.estimatedQuantity);
       return (
         (!minQuantity || quantity >= parseFloat(minQuantity)) &&
@@ -73,8 +78,12 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
   };
 
   const closeModal = () => setSelectedImages([]);
-  const showNext = () => setCurrentIndex(prev => (prev + 1) % selectedImages.length);
-  const showPrev = () => setCurrentIndex(prev => (prev - 1 + selectedImages.length) % selectedImages.length);
+  const showNext = () =>
+    setCurrentIndex((prev) => (prev + 1) % selectedImages.length);
+  const showPrev = () =>
+    setCurrentIndex(
+      (prev) => (prev - 1 + selectedImages.length) % selectedImages.length
+    );
   const openProfileModal = (url) => setProfileImageUrl(url);
   const closeProfileModal = () => setProfileImageUrl(null);
   const resetFilters = () => {
@@ -90,7 +99,10 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
   if (!harvests || harvests.length === 0) {
     return (
       <div className="text-center p-4 bg-gray-800 rounded-lg">
-        <FontAwesomeIcon icon={faLeaf} className="text-2xl text-gray-400 mb-1" />
+        <FontAwesomeIcon
+          icon={faLeaf}
+          className="text-2xl text-gray-400 mb-1"
+        />
         <p className="text-gray-400 text-sm">No harvests available yet.</p>
       </div>
     );
@@ -102,7 +114,10 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
       <div className="bg-gray-800 p-3 rounded-lg shadow-sm mb-4">
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative flex-grow max-w-md">
-            <FontAwesomeIcon icon={faSearch} className="absolute left-2 top-2 text-gray-400 text-sm" />
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="absolute left-2 top-2 text-gray-400 text-sm"
+            />
             <input
               type="text"
               placeholder="Search crops..."
@@ -118,8 +133,10 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
             className="bg-gray-700 text-white border-gray-600 focus:ring-1 focus:ring-green-500 text-sm rounded-lg px-2 py-1.5"
           >
             <option value="">All Types</option>
-            {[...new Set(harvests.map(h => h.cropType))].map(type => (
-              <option key={type} value={type}>{type}</option>
+            {[...new Set(harvests.map((h) => h.cropType))].map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
 
@@ -129,8 +146,10 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
             className="bg-gray-700 text-white border-gray-600 focus:ring-1 focus:ring-green-500 text-sm rounded-lg px-2 py-1.5"
           >
             <option value="">All Currencies</option>
-            {[...new Set(harvests.map(h => h.currency))].map(currency => (
-              <option key={currency} value={currency}>{currency}</option>
+            {[...new Set(harvests.map((h) => h.currency))].map((currency) => (
+              <option key={currency} value={currency}>
+                {currency}
+              </option>
             ))}
           </select>
 
@@ -165,21 +184,26 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
 
       {/* Harvest Cards - Made smaller */}
       <div className="mb-6">
-        {paginatedKeys.map(cropName => (
+        {paginatedKeys.map((cropName) => (
           <div key={cropName} className="mb-4">
             <h2 className="text-md font-semibold text-gray-100 mb-2 flex items-center uppercase">
-              <FontAwesomeIcon icon={faLeaf} className="text-green-500 mr-1 text-sm" />
+              <FontAwesomeIcon
+                icon={faLeaf}
+                className="text-green-500 mr-1 text-sm"
+              />
               {cropName}
             </h2>
+            <hr className="border-0 h-1 bg-gradient-to-r from-green-500 via-green-700 to-green-500 rounded-full my-5" />
+
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-              {groupedHarvests[cropName].map(harvest => (
+              {groupedHarvests[cropName].map((harvest) => (
                 <div
                   key={harvest._id}
                   className="bg-gray-800 rounded-md shadow-sm hover:shadow-md transition overflow-hidden border border-gray-700"
                 >
                   {harvest.imageUrls?.length > 0 && (
-                    <div 
-                      className="relative pt-[70%] overflow-hidden cursor-pointer" 
+                    <div
+                      className="relative pt-[70%] overflow-hidden cursor-pointer"
                       onClick={() => openModal(harvest.imageUrls)}
                     >
                       <img
@@ -201,40 +225,63 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
 
                     <div className="space-y-1 text-xs text-gray-400">
                       <div className="flex items-center">
-                        <FontAwesomeIcon icon={faWeightHanging} className="mr-1 text-gray-500 text-[0.6rem]" />
-                        <span className="truncate">{harvest.estimatedQuantity} {harvest.unit}</span>
+                        <FontAwesomeIcon
+                          icon={faWeightHanging}
+                          className="mr-1 text-gray-500 text-[0.6rem]"
+                        />
+                        <span className="truncate">
+                          {harvest.estimatedQuantity} {harvest.unit}
+                        </span>
                       </div>
                       {harvest.expectedHarvestDate && (
                         <div className="flex items-center">
-                          <FontAwesomeIcon icon={faCalendarAlt} className="mr-1 text-gray-500 text-[0.6rem]" />
-                          <span className="text-[0.65rem]">{new Date(harvest.expectedHarvestDate).toLocaleDateString()}</span>
+                          <FontAwesomeIcon
+                            icon={faCalendarAlt}
+                            className="mr-1 text-gray-500 text-[0.6rem]"
+                          />
+                          <span className="text-[0.65rem]">
+                            {new Date(
+                              harvest.expectedHarvestDate
+                            ).toLocaleDateString()}
+                          </span>
                         </div>
                       )}
                     </div>
 
                     <div className="mt-2 flex justify-between gap-1">
                       <button
-                        onClick={() => window.location.href = `/farmer/${harvest.farmerId._id}`}
+                        onClick={() =>
+                          (window.location.href = `/farmer/${harvest.farmerId._id}`)
+                        }
                         className="text-[0.6rem] bg-blue-600 hover:bg-blue-700 text-white px-1.5 py-1 rounded transition flex items-center justify-center"
                         title="View Profile"
                       >
-                        <FontAwesomeIcon icon={faUser} className="text-[0.6rem]" />
+                        <FontAwesomeIcon
+                          icon={faUser}
+                          className="text-[0.6rem]"
+                        />
                       </button>
-                      
+
                       <div className="flex gap-1">
                         <button
                           onClick={() => onEditClick(harvest)}
                           className="text-[0.6rem] bg-yellow-600 hover:bg-yellow-700 text-white px-1.5 py-1 rounded transition flex items-center justify-center"
                           title="Edit"
                         >
-                          <FontAwesomeIcon icon={faEdit} className="text-[0.6rem]" />
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            className="text-[0.6rem]"
+                          />
                         </button>
                         <button
                           onClick={() => onDelete(harvest._id)}
                           className="text-[0.6rem] bg-red-600 hover:bg-red-700 text-white px-1.5 py-1 rounded transition flex items-center justify-center"
                           title="Delete"
                         >
-                          <FontAwesomeIcon icon={faTrash} className="text-[0.6rem]" />
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="text-[0.6rem]"
+                          />
                         </button>
                       </div>
                     </div>
@@ -250,29 +297,31 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
       {totalPages > 1 && (
         <div className="flex justify-center gap-1 my-4">
           <button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
             className="px-2 py-1 rounded border border-gray-600 text-gray-300 disabled:opacity-50 text-sm"
           >
             <FontAwesomeIcon icon={faChevronLeft} className="text-xs" />
           </button>
-          
-          {[...Array(totalPages).keys()].map(num => (
+
+          {[...Array(totalPages).keys()].map((num) => (
             <button
               key={num + 1}
               onClick={() => setCurrentPage(num + 1)}
               className={`px-2 py-1 rounded text-xs ${
-                currentPage === num + 1 
-                  ? "bg-green-600 text-white" 
+                currentPage === num + 1
+                  ? "bg-green-600 text-white"
                   : "bg-gray-700 text-gray-300 hover:bg-gray-600"
               }`}
             >
               {num + 1}
             </button>
           ))}
-          
+
           <button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
             className="px-2 py-1 rounded border border-gray-600 text-gray-300 disabled:opacity-50 text-sm"
           >
@@ -312,7 +361,10 @@ const HarvestList = ({ harvests, onDelete, onEditClick }) => {
 
       {/* Profile Image Modal (unchanged) */}
       {profileImageUrl && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" onClick={closeProfileModal}>
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={closeProfileModal}
+        >
           <img
             src={profileImageUrl}
             alt="Farmer"

@@ -114,7 +114,7 @@ const HomePage = () => {
       {/* Navbar */}
       <nav className="fixed w-full z-50 bg-gray-900 text-white shadow-lg shadow-black/50 border-b border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold flex items-center gap-2">
+          <h1 className="text-2xl font-bold flex items-center gap-2 cursor-pointer">
             <FontAwesomeIcon icon={faLeaf} className="text-green-500" />
             <span className="text-green-400">HarvestLink</span>
           </h1>

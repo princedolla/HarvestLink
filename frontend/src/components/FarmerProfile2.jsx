@@ -139,7 +139,7 @@ const FarmerProfile = () => {
         {/* Back Button */}
         <Link
           to="/"
-          className="inline-flex items-center mb-4 px-3 py-1.5 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition border border-gray-700 text-sm"
+          className="inline-flex text-white items-center mb-6 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors duration-200"
         >
           <FontAwesomeIcon icon={faArrowLeft} className="mr-1.5" />
           Back to Home
