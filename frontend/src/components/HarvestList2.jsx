@@ -403,7 +403,7 @@ const HarvestList = ({ harvests, loading, onImageClick }) => {
             {paginatedKeys.slice(0, visibleCrops).map((cropName) => (
               <div key={cropName} className="mb-6">
                 <div className="flex justify-between items-center mb-3">
-                  <h2 className="text-lg font-semibold flex items-center text-white">
+                  <h2 className="text-lg font-semibold flex items-center text-white uppercase">
                     <FontAwesomeIcon
                       icon={faLeaf}
                       className="text-green-500 mr-2"
