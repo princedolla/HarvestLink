@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
@@ -43,97 +43,119 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4 relative overflow-hidden">
+      {/* Background Animation */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-4 h-4 bg-blue-500 rounded-full opacity-20 animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${15 + Math.random() * 15}s`,
+              transform: `scale(${0.5 + Math.random() * 2})`,
+            }}
+          ></div>
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-purple-900/10"></div>
+      </div>
+
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md border border-gray-700"
+        className="bg-gray-800/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-700/50 relative z-10 transform transition-all duration-300 hover:shadow-blue-500/10"
       >
         <div className="flex flex-col items-center mb-8">
           {/* Back Link */}
-          <div className="mb-4">
+          <div className="self-start mb-4">
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1"
+              className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3"
             >
-              <FontAwesomeIcon icon={faArrowLeft} /> Back
+              <FontAwesomeIcon icon={faArrowLeft} /> Back to Home
             </button>
           </div>
-          <div className="bg-blue-600 p-3 rounded-full mb-4">
-            <FiLogIn className="text-white text-2xl" />
+          
+          <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-4 rounded-2xl mb-5 shadow-lg">
+            <FiLogIn className="text-white text-3xl" />
           </div>
-          <h2 className="text-2xl font-bold text-white">Admin Login</h2>
-          <p className="text-gray-400 mt-1">
-            Enter your credentials to continue
+          <h2 className="text-3xl font-bold text-white mb-2">Admin Portal</h2>
+          <p className="text-gray-400 text-center">
+            Enter your credentials to access the admin dashboard
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-300 flex items-center gap-2">
-            <FiAlertCircle className="flex-shrink-0" />
-            <span>{error}</span>
+          <div className="mb-6 p-4 bg-red-900/50 border border-red-700 rounded-xl text-red-300 flex items-center gap-3 animate-fadeIn">
+            <FiAlertCircle className="flex-shrink-0 text-lg" />
+            <span className="text-sm">{error}</span>
           </div>
         )}
 
-        <div className="mb-4">
-          <label className="block text-gray-300 mb-2 font-medium">
-            Username
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiUser className="text-gray-500" />
+        <div className="space-y-5">
+          <div>
+            <label className="block text-gray-300 mb-3 font-medium">
+              Username
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiUser className="text-gray-400 text-lg" />
+              </div>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full pl-12 pr-4 py-3.5 bg-gray-700/50 border border-gray-600/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/30 transition-all duration-300 backdrop-blur-sm"
+                placeholder="Enter your username"
+                autoComplete="username"
+              />
             </div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="w-full pl-10 pr-3 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter username"
-              autoComplete="username"
-            />
           </div>
-        </div>
-        <div className="mb-6">
-          <label className="block text-gray-300 mb-2 font-medium">
-            Password
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FiLock className="text-gray-500" />
+          
+          <div>
+            <label className="block text-gray-300 mb-3 font-medium">
+              Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiLock className="text-gray-400 text-lg" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full pl-12 pr-12 py-3.5 bg-gray-700/50 border border-gray-600/30 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/30 transition-all duration-300 backdrop-blur-sm"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none p-2 rounded-full hover:bg-gray-600/30 transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
             </div>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full pl-10 pr-10 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter password"
-              autoComplete="current-password"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none"
-            >
-              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-            </button>
           </div>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition-colors flex items-center justify-center gap-2 ${
+          className={`w-full py-4 px-4 rounded-xl font-semibold text-white transition-all duration-300 flex items-center justify-center gap-3 mt-8 ${
             loading
               ? "bg-blue-700 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
+              : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg hover:shadow-blue-500/20"
           }`}
         >
           {loading ? (
             <>
               <svg
-                className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                className="animate-spin h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -156,12 +178,42 @@ const Login = () => {
             </>
           ) : (
             <>
-              <FiLogIn />
-              Login
+              <FiLogIn className="text-lg" />
+              Sign In to Dashboard
             </>
           )}
         </button>
+        
+        <div className="mt-6 text-center">
+          <a href="#" className="text-blue-400 hover:text-blue-300 text-sm transition-colors duration-200">
+            Forgot your password?
+          </a>
+        </div>
       </form>
+      
+      <style jsx>{`
+        @keyframes float {
+          0% {
+            transform: translateY(0) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(10deg);
+          }
+          100% {
+            transform: translateY(0) rotate(0deg);
+          }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-float {
+          animation: float 10s ease-in-out infinite;
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

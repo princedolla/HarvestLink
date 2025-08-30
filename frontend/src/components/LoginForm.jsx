@@ -1,19 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash,faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faEye, 
+  faEyeSlash, 
+  faArrowLeft, 
+  faEnvelope, 
+  faPhone, 
+  faLock,
+  faUser,
+  faSeedling,
+  faChartLine,
+  faSignInAlt,
+  faLeaf
+} from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); // Added rememberMe state
+  const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [animateText, setAnimateText] = useState(false);
+  const [textIndex, setTextIndex] = useState(0);
 
   const navigate = useNavigate();
+
+  const animatedTexts = [
+    "Please log in to view your dashboard.",
+    "Access real-time farming insights.",
+    "Connect with buyers directly.",
+    "Track your crop performance."
+  ];
+
+  useEffect(() => {
+    // Trigger animation after component mounts
+    const timer = setTimeout(() => {
+      setAnimateText(true);
+    }, 300);
+    
+    // Text rotation animation
+    const textInterval = setInterval(() => {
+      setTextIndex((prev) => (prev + 1) % animatedTexts.length);
+    }, 3000);
+    
+    return () => {
+      clearTimeout(timer);
+      clearInterval(textInterval);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,42 +100,145 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center relative overflow-hidden">
+      {/* Enhanced Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-yellow-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-24 h-24 bg-teal-500/15 rounded-full blur-xl animate-pulse delay-1500"></div>
+        
+        {/* Animated grid pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '120px'
+          }}></div>
+        </div>
+        
+        {/* Floating leaves with enhanced animation */}
+        <div className="absolute top-10 left-10 animate-float-slow">
+          <FontAwesomeIcon icon={faLeaf} className="text-green-400/30 text-4xl rotate-45" />
+        </div>
+        <div className="absolute top-20 right-20 animate-float-medium">
+          <FontAwesomeIcon icon={faLeaf} className="text-emerald-400/30 text-3xl -rotate-12" />
+        </div>
+        <div className="absolute bottom-20 left-20 animate-float-fast">
+          <FontAwesomeIcon icon={faLeaf} className="text-lime-400/30 text-5xl rotate-30" />
+        </div>
+        <div className="absolute bottom-10 right-10 animate-float-slow">
+          <FontAwesomeIcon icon={faLeaf} className="text-green-400/30 text-2xl -rotate-20" />
+        </div>
+        <div className="absolute top-1/3 right-1/4 animate-float-medium">
+          <FontAwesomeIcon icon={faLeaf} className="text-teal-400/25 text-3xl rotate-15" />
+        </div>
+        <div className="absolute bottom-1/4 left-1/3 animate-float-fast">
+          <FontAwesomeIcon icon={faLeaf} className="text-yellow-400/20 text-4xl -rotate-30" />
+        </div>
+        
+        {/* Subtle moving particles */}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-green-400/20 rounded-full animate-float-particles"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.7}s`,
+              animationDuration: `${15 + i * 2}s`
+            }}
+          ></div>
+        ))}
+      </div>
+
+      <div className="w-full max-w-4xl bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-green-700/30 relative z-10">
         <div className="flex flex-col md:flex-row">
           {/* Left Side - Image/Graphics */}
-          <div className="md:w-1/2 bg-green-900 p-8 flex flex-col justify-center items-center">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-green-300 mb-2">
+          <div className="md:w-2/5 bg-gradient-to-br from-green-800 to-emerald-900 p-8 flex flex-col justify-center items-center relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-green-600/30"></div>
+            <div className="absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-emerald-500/30"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-yellow-500/10 blur-xl"></div>
+            
+            <div className="text-center mb-8 z-10">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-700/40 mb-4 shadow-lg">
+                <FontAwesomeIcon icon={faSeedling} className="text-green-300 text-2xl" />
+              </div>
+              <h2 className="text-3xl font-bold text-green-100 mb-2">
                 Welcome Back
               </h2>
-              <p className="text-green-200">
-                Login to access your farming dashboard
-              </p>
+              
+              {/* Enhanced animated text with icons */}
+              <div className="mt-6 p-4 bg-gradient-to-r from-green-900/50 to-emerald-900/40 rounded-xl border border-green-700/30 shadow-inner relative overflow-hidden">
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-shimmer"></div>
+                
+                <div className="flex items-center justify-center mb-2 relative z-10">
+                  <FontAwesomeIcon icon={faChartLine} className="text-green-300 mr-2" />
+                  <span className="text-green-200 font-medium">Dashboard Access</span>
+                </div>
+                <div className="h-8 overflow-hidden relative">
+                  {animatedTexts.map((text, index) => (
+                    <p 
+                      key={index}
+                      className={`text-green-200/80 text-sm transition-all duration-1000 ease-in-out absolute w-full text-center ${
+                        textIndex === index 
+                          ? 'translate-y-0 opacity-100' 
+                          : index < textIndex 
+                            ? '-translate-y-full opacity-0' 
+                            : 'translate-y-full opacity-0'
+                      }`}
+                    >
+                      {text}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="w-full max-w-xs">
-              <img
-                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                alt="Farming in Rwanda"
-                className="rounded-lg shadow-lg"
-              />
+            <div className="w-full max-w-xs z-10 mt-4">
+              <div className="bg-green-700/40 p-6 rounded-2xl shadow-inner border border-green-600/30 transform hover:scale-105 transition-transform duration-500">
+                <img
+                  src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  alt="Farming in Rwanda"
+                  className="rounded-xl shadow-lg"
+                />
+              </div>
             </div>
+            
+            {/* Decorative corner elements */}
+            <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-green-500/50 rounded-tl-2xl"></div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-green-500/50 rounded-br-2xl"></div>
+            
+            {/* Animated dots */}
+            <div className="absolute top-4 right-4 w-3 h-3 bg-green-400/40 rounded-full animate-pulse"></div>
+            <div className="absolute bottom-4 left-4 w-2 h-2 bg-emerald-400/40 rounded-full animate-pulse delay-700"></div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="md:w-1/2 p-8 md:p-10">
+          <div className="md:w-3/5 p-8 md:p-10 relative">
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundSize: '120px'
+              }}></div>
+            </div>
+            
             {/* Back Link */}
-            <div className="mb-4">
+            <div className="mb-6">
               <button
                 type="button"
                 onClick={() => navigate("/")}
-                className="text-green-400 hover:text-green-300 font-medium flex items-center gap-1"
+                className="text-green-400 hover:text-green-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3 group"
               >
-                <FontAwesomeIcon icon={faArrowLeft} /> Back
+                <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-1 transition-transform" /> 
+                Back to Home
               </button>
             </div>
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-green-400 mb-2">
+            
+            <div className="text-center mb-8 relative z-10">
+              <h2 className="text-3xl font-bold text-green-400 mb-2 flex items-center justify-center gap-2">
+                <FontAwesomeIcon icon={faSignInAlt} className="text-green-500" />
                 Sign In
               </h2>
               <p className="text-gray-300">
@@ -106,7 +247,7 @@ const LoginForm = () => {
             </div>
 
             {error && (
-              <div className="mb-6 bg-red-900/30 border-l-4 border-red-500 p-4">
+              <div className="mb-6 bg-red-900/30 border-l-4 border-red-500 p-4 rounded-r-lg relative z-10">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg
@@ -128,31 +269,18 @@ const LoginForm = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               {/* Identifier */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Phone or Email *
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    {/* icon */}
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      {identifier.includes("@") ? (
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                      ) : (
-                        <path
-                          fillRule="evenodd"
-                          d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z"
-                          clipRule="evenodd"
-                        />
-                      )}
-                    </svg>
+                    <FontAwesomeIcon 
+                      icon={identifier.includes("@") ? faEnvelope : faPhone} 
+                      className="h-5 w-5 text-gray-400" 
+                    />
                   </div>
                   <input
                     type="text"
@@ -160,7 +288,7 @@ const LoginForm = () => {
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     disabled={isLoading}
-                    className={`${inputClass} pl-10`}
+                    className="w-full px-4 py-3 pl-10 text-sm rounded-lg border border-gray-600 focus:ring-2 outline-none focus:ring-green-500 focus:border-transparent transition duration-200 bg-gray-700/50 text-gray-200 placeholder-gray-400 shadow-inner"
                     required
                   />
                 </div>
@@ -168,24 +296,12 @@ const LoginForm = () => {
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Password *
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    {/* lock icon */}
-                    <svg
-                      className="h-5 w-5 text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <FontAwesomeIcon icon={faLock} className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
                     type={showPassword ? "text" : "password"}
@@ -193,27 +309,27 @@ const LoginForm = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isLoading}
-                    className={`${inputClass} pl-10 pr-10`}
+                    className="w-full px-4 py-3 pl-10 pr-10 text-sm rounded-lg border border-gray-600 focus:ring-2 outline-none focus:ring-green-500 focus:border-transparent transition duration-200 bg-gray-700/50 text-gray-200 placeholder-gray-400 shadow-inner"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-300 transition-colors duration-200 focus:outline-none"
                   >
                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                   </button>
                 </div>
               </div>
 
-              {/* Remember Me */}
+              {/* Remember Me & Forgot Password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-500 rounded bg-gray-700"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-500 rounded bg-gray-700/50"
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
@@ -228,7 +344,7 @@ const LoginForm = () => {
                 <div className="text-sm">
                   <Link
                     to="/forgot-password"
-                    className="font-medium text-green-400 hover:text-green-300"
+                    className="font-medium text-green-400 hover:text-green-300 transition-colors duration-200 hover:underline"
                   >
                     Forgot password?
                   </Link>
@@ -240,10 +356,10 @@ const LoginForm = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full py-3 px-4 rounded-lg font-medium text-white transition duration-200 ${
+                  className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-all duration-300 shadow-lg ${
                     isLoading
                       ? "bg-green-800 cursor-not-allowed"
-                      : "bg-green-600 hover:bg-green-700 shadow-md hover:shadow-lg"
+                      : "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 hover:shadow-xl transform hover:-translate-y-0.5"
                   }`}
                 >
                   {isLoading ? (
@@ -277,14 +393,14 @@ const LoginForm = () => {
               </div>
 
               {/* Register Link */}
-              <div className="text-center">
+              <div className="text-center pt-4 border-t border-gray-700/50">
                 <p className="text-sm text-gray-400">
                   Don't have an account?{" "}
                   <Link
                     to="/register"
-                    className="text-green-400 hover:text-green-300 hover:underline font-medium"
+                    className="text-green-400 hover:text-green-300 hover:underline font-medium transition-colors duration-200"
                   >
-                    Register
+                    Create Account
                   </Link>
                 </p>
               </div>
@@ -292,11 +408,42 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Add custom CSS for animations */}
+      <style jsx>{`
+        @keyframes float {
+          0% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(5deg); }
+          100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-particles {
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) skewX(-12deg); }
+          100% { transform: translateX(200%) skewX(-12deg); }
+        }
+        .animate-float-slow {
+          animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-medium {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animate-float-fast {
+          animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-particles {
+          animation: float-particles linear infinite;
+        }
+        .animate-shimmer {
+          animation: shimmer 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
-
-const inputClass =
-  "w-full px-4 py-2 text-sm rounded-lg border border-gray-600 focus:ring-2 outline-none focus:ring-green-500 focus:border-transparent transition duration-200 bg-gray-700 text-gray-200 placeholder-gray-400";
 
 export default LoginForm;

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarvestLink - Multilingual Agricultural Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Google Translate Widget Styling */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        .goog-te-menu-value {
+            display: none !important;
+        }
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+        .goog-te-combo {
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: #374151;
+            color: white;
+            border: 1px solid #4B5563;
+            cursor: pointer;
+        }
+        .goog-te-combo:focus {
+            outline: none;
+            border-color: #10B981;
+        }
+        .skiptranslate iframe {
+            display: none !important;
+        }
+        body {
+            top: 0 !important;
+        }
+        
+        /* Marquee animation */
+        .marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Image modal */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-gray-900 text-white shadow-lg shadow-black/50 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center gap-2 cursor-pointer">
+                <i class="fas fa-leaf text-green-500"></i>
+                <span class="text-green-400">HarvestLink</span>
+            </h1>
+
+            <!-- Language Selector -->
+            <div class="flex items-center space-x-4">
+                <div id="google_translate_element"></div>
+                
+                <!-- Custom language selector that works with Google Translate -->
+                <select id="custom_language_selector" class="bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                    <option value="rw">Kinyarwanda</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh-CN">中文</option>
+                </select>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="hover:text-green-400 flex items-center gap-2 text-gray-300">
+                    <i class="fas fa-home"></i> <span>Home</span>
+                </a>
+                <a href="#" class="hover:text-green-400 flex items-center gap-2 text-gray-300">
+                    <i class="fas fa-user-plus"></i> <span>Register</span>
+                </a>
+                <a href="#" class="hover:text-green-400 flex items-center gap-2 text-gray-300">
+                    <i class="fas fa-sign-in-alt"></i> <span>Login</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-gray-300 hover:text-green-400" id="mobile-menu-button">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (initially hidden) -->
+        <div class="md:hidden bg-gray-800 py-2 px-4 space-y-3 hidden" id="mobile-menu">
+            <a href="#" class="block hover:text-green-400 flex items-center gap-2 text-gray-300 py-1">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="#" class="block hover:text-green-400 flex items-center gap-2 text-gray-300 py-1">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
+            <a href="#" class="block hover:text-green-400 flex items-center gap-2 text-gray-300 py-1">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+        </div>
+
+        <!-- Announcement Marquee -->
+        <div class="bg-green-600 text-white overflow-hidden whitespace-nowrap py-2 border-b border-green-700 relative">
+            <div class="marquee">
+                📢 New season harvests now available! | 📝 Register now to connect directly with farmers | 🚜 HarvestLink — Empowering Farmers Everywhere!
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 text-center bg-cover bg-center mt-24" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(16, 185, 129, 0.3)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80'); min-height: 300px;">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="container mx-auto px-4 relative z-10 flex flex-col items-center justify-center h-full">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white flex items-center justify-center gap-2">
+                Welcome to HarvestLink <i class="fas fa-tractor text-green-400"></i>
+            </h2>
+
+            <p class="text-lg text-gray-200 mb-6 flex items-center justify-center gap-2">
+                <i class="fas fa-handshake text-green-400"></i> Connecting farmers directly with buyers
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition border border-green-700">
+                    Login
+                </a>
+                <a href="#" class="px-6 py-2 bg-gray-900 text-green-400 rounded hover:bg-gray-800 transition border border-gray-700">
+                    Register
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harvest List Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-8 text-center text-green-400">Available Harvests</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Harvest Item 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fresh vegetables" class="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer" onclick="openImageModal('https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-green-400">Fresh Vegetables</h3>
+                        <p class="text-gray-400 mt-2">Organic tomatoes, carrots, and bell peppers</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-green-500 font-bold">$45.00</span>
+                            <span class="text-gray-500">20kg available</span>
+                        </div>
+                        <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Harvest Item 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fresh fruits" class="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer" onclick="openImageModal('https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-green-400">Seasonal Fruits</h3>
+                        <p class="text-gray-400 mt-2">Fresh mangoes, bananas, and pineapples</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-green-500 font-bold">$62.00</span>
+                            <span class="text-gray-500">15kg available</span>
+                        </div>
+                        <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Harvest Item 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 fade-in">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Grains" class="w-full h-full object-cover hover:scale-105 transition duration-500 cursor-pointer" onclick="openImageModal('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80')">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold text-green-400">Organic Grains</h3>
+                        <p class="text-gray-400 mt-2">High-quality maize, beans, and rice</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <span class="text-green-500 font-bold">$38.00</span>
+                            <span class="text-gray-500">50kg available</span>
+                        </div>
+                        <button class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white py-2 rounded transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading spinner (initially hidden) -->
+            <div id="loading-spinner" class="flex justify-center items-center h-48 hidden">
+                <i class="fas fa-spinner text-green-500 text-4xl spinner"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal (initially hidden) -->
+    <div id="image-modal" class="fixed inset-0 modal-overlay z-50 flex items-center justify-center hidden">
+        <button onclick="closeImageModal()" class="absolute top-5 right-5 text-green-500 text-3xl hover:text-green-400">
+            <i class="fas fa-times"></i>
+        </button>
+        <button onclick="showPrevImage()" class="absolute left-5 text-white text-3xl hover:text-green-400 p-4">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <img id="modal-image" src="" alt="Harvest image" class="max-h-[80vh] max-w-[90vw] object-contain">
+        <button onclick="showNextImage()" class="absolute right-5 text-white text-3xl hover:text-green-400 p-4">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="absolute bottom-5 text-white text-sm bg-black/50 px-2 py-1 rounded">
+            <span id="image-counter">1 / 1</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 text-center py-4 mt-auto border-t border-gray-800">
+        <p>&copy; 2023 HarvestLink. All rights reserved.</p>
+    </footer>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        // Function to initialize Google Translate
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'rw',
+                includedLanguages: 'en,fr,es,de,ru,rw,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            
+            // Set Kinyarwanda as default after a short delay
+            setTimeout(() => {
+                changeLanguage('rw');
+            }, 500);
+        }
+        
+        // Load Google Translate script
+        function loadGoogleTranslate() {
+            const script = document.createElement('script');
+            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            script.async = true;
+            document.body.appendChild(script);
+        }
+        
+        // Change language function
+        function changeLanguage(lang) {
+            const select = document.querySelector('.goog-te-combo');
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            }
+            
+            // Update custom selector to stay in sync
+            document.getElementById('custom_language_selector').value = lang;
+        }
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Custom language selector event listener
+        document.getElementById('custom_language_selector').addEventListener('change', function(e) {
+            changeLanguage(e.target.value);
+        });
+        
+        // Image modal functionality
+        const images = [
+            'https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'
+        ];
+        let currentImageIndex = 0;
+        
+        function openImageModal(src) {
+            currentImageIndex = images.indexOf(src);
+            updateModalImage();
+            document.getElementById('image-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        function closeImageModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateModalImage();
+        }
+        
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateModalImage();
+        }
+        
+        function updateModalImage() {
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = images[currentImageIndex];
+            document.getElementById('image-counter').textContent = `${currentImageIndex + 1} / ${images.length}`;
+        }
+        
+        // Close modal when clicking outside the image
+        document.getElementById('image-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+        
+        // Simulate loading harvests
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingSpinner = document.getElementById('loading-spinner');
+            loadingSpinner.classList.remove('hidden');
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                loadingSpinner.classList.add('hidden');
+            }, 1500);
+            
+            // Load Google Translate
+            loadGoogleTranslate();
+        });
+    </script>
+</body>
+</html>
