@@ -26,7 +26,7 @@ import {
   faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
 
-const HarvestList = ({ harvests, loading, onImageClick }) => {
+const HarvestList = ({ harvests, loading }) => {
   // State management
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -470,7 +470,7 @@ const HarvestList = ({ harvests, loading, onImageClick }) => {
                             <img
                               src={harvest.imageUrls[0]}
                               alt={harvest.cropName}
-                              onClick={() => onImageClick(harvest.imageUrls)}
+                              onClick={() => openModal(harvest.imageUrls)}
                               className="absolute top-0 left-0 h-full w-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-200"
                             />
                             <div className="absolute top-2 right-2 flex gap-1">
@@ -497,7 +497,7 @@ const HarvestList = ({ harvests, loading, onImageClick }) => {
                               </div>
                             )}
                             <button
-                              onClick={() => onImageClick(harvest.imageUrls)}
+                              onClick={() => openModal(harvest.imageUrls)}
                               className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-sm"
                             >
                               <div className="bg-white/80 p-1.5 rounded-full">
