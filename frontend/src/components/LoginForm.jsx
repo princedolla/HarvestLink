@@ -3,18 +3,18 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faEye, 
-  faEyeSlash, 
-  faArrowLeft, 
-  faEnvelope, 
-  faPhone, 
+import {
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+  faEnvelope,
+  faPhone,
   faLock,
   faUser,
   faSeedling,
   faChartLine,
   faSignInAlt,
-  faLeaf
+  faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
@@ -33,7 +33,7 @@ const LoginForm = () => {
     "Please log in to view your dashboard.",
     "Access real-time farming insights.",
     "Connect with buyers directly.",
-    "Track your crop performance."
+    "Track your crop performance.",
   ];
 
   useEffect(() => {
@@ -41,12 +41,12 @@ const LoginForm = () => {
     const timer = setTimeout(() => {
       setAnimateText(true);
     }, 300);
-    
+
     // Text rotation animation
     const textInterval = setInterval(() => {
       setTextIndex((prev) => (prev + 1) % animatedTexts.length);
     }, 3000);
-    
+
     return () => {
       clearTimeout(timer);
       clearInterval(textInterval);
@@ -107,35 +107,56 @@ const LoginForm = () => {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-yellow-500/10 rounded-full blur-2xl animate-pulse delay-500"></div>
         <div className="absolute bottom-1/3 right-1/3 w-24 h-24 bg-teal-500/15 rounded-full blur-xl animate-pulse delay-1500"></div>
-        
+
         {/* Animated grid pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '120px'
-          }}></div>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: "120px",
+            }}
+          ></div>
         </div>
-        
+
         {/* Floating leaves with enhanced animation */}
         <div className="absolute top-10 left-10 animate-float-slow">
-          <FontAwesomeIcon icon={faLeaf} className="text-green-400/30 text-4xl rotate-45" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-green-400/30 text-4xl rotate-45"
+          />
         </div>
         <div className="absolute top-20 right-20 animate-float-medium">
-          <FontAwesomeIcon icon={faLeaf} className="text-emerald-400/30 text-3xl -rotate-12" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-emerald-400/30 text-3xl -rotate-12"
+          />
         </div>
         <div className="absolute bottom-20 left-20 animate-float-fast">
-          <FontAwesomeIcon icon={faLeaf} className="text-lime-400/30 text-5xl rotate-30" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-lime-400/30 text-5xl rotate-30"
+          />
         </div>
         <div className="absolute bottom-10 right-10 animate-float-slow">
-          <FontAwesomeIcon icon={faLeaf} className="text-green-400/30 text-2xl -rotate-20" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-green-400/30 text-2xl -rotate-20"
+          />
         </div>
         <div className="absolute top-1/3 right-1/4 animate-float-medium">
-          <FontAwesomeIcon icon={faLeaf} className="text-teal-400/25 text-3xl rotate-15" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-teal-400/25 text-3xl rotate-15"
+          />
         </div>
         <div className="absolute bottom-1/4 left-1/3 animate-float-fast">
-          <FontAwesomeIcon icon={faLeaf} className="text-yellow-400/20 text-4xl -rotate-30" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-yellow-400/20 text-4xl -rotate-30"
+          />
         </div>
-        
+
         {/* Subtle moving particles */}
         {[...Array(15)].map((_, i) => (
           <div
@@ -145,7 +166,7 @@ const LoginForm = () => {
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animationDelay: `${i * 0.7}s`,
-              animationDuration: `${15 + i * 2}s`
+              animationDuration: `${15 + i * 2}s`,
             }}
           ></div>
         ))}
@@ -159,34 +180,42 @@ const LoginForm = () => {
             <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-green-600/30"></div>
             <div className="absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-emerald-500/30"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-yellow-500/10 blur-xl"></div>
-            
+
             <div className="text-center mb-8 z-10">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-700/40 mb-4 shadow-lg">
-                <FontAwesomeIcon icon={faSeedling} className="text-green-300 text-2xl" />
+                <FontAwesomeIcon
+                  icon={faSeedling}
+                  className="text-green-300 text-2xl"
+                />
               </div>
               <h2 className="text-3xl font-bold text-green-100 mb-2">
                 Welcome Back
               </h2>
-              
+
               {/* Enhanced animated text with icons */}
               <div className="mt-6 p-4 bg-gradient-to-r from-green-900/50 to-emerald-900/40 rounded-xl border border-green-700/30 shadow-inner relative overflow-hidden">
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-shimmer"></div>
-                
+
                 <div className="flex items-center justify-center mb-2 relative z-10">
-                  <FontAwesomeIcon icon={faChartLine} className="text-green-300 mr-2" />
-                  <span className="text-green-200 font-medium">Dashboard Access</span>
+                  <FontAwesomeIcon
+                    icon={faChartLine}
+                    className="text-green-300 mr-2"
+                  />
+                  <span className="text-green-200 font-medium">
+                    Dashboard Access
+                  </span>
                 </div>
                 <div className="h-8 overflow-hidden relative">
                   {animatedTexts.map((text, index) => (
-                    <p 
+                    <p
                       key={index}
                       className={`text-green-200/80 text-sm transition-all duration-1000 ease-in-out absolute w-full text-center ${
-                        textIndex === index 
-                          ? 'translate-y-0 opacity-100' 
-                          : index < textIndex 
-                            ? '-translate-y-full opacity-0' 
-                            : 'translate-y-full opacity-0'
+                        textIndex === index
+                          ? "translate-y-0 opacity-100"
+                          : index < textIndex
+                          ? "-translate-y-full opacity-0"
+                          : "translate-y-full opacity-0"
                       }`}
                     >
                       {text}
@@ -204,11 +233,11 @@ const LoginForm = () => {
                 />
               </div>
             </div>
-            
+
             {/* Decorative corner elements */}
             <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-green-500/50 rounded-tl-2xl"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-green-500/50 rounded-br-2xl"></div>
-            
+
             {/* Animated dots */}
             <div className="absolute top-4 right-4 w-3 h-3 bg-green-400/40 rounded-full animate-pulse"></div>
             <div className="absolute bottom-4 left-4 w-2 h-2 bg-emerald-400/40 rounded-full animate-pulse delay-700"></div>
@@ -218,27 +247,35 @@ const LoginForm = () => {
           <div className="md:w-3/5 p-8 md:p-10 relative">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                backgroundSize: '120px'
-              }}></div>
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                  backgroundSize: "120px",
+                }}
+              ></div>
             </div>
-            
-            {/* Back Link */}
-            <div className="mb-6">
-              <button
-                type="button"
-                onClick={() => navigate("/")}
-                className="text-green-400 hover:text-green-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3 group"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-1 transition-transform" /> 
-                Back to Home
-              </button>
-            </div>
-            
+
             <div className="text-center mb-8 relative z-10">
+              {/* Back Link */}
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => navigate("/")}
+                  className="text-green-400 hover:text-green-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3 group"
+                >
+                  <FontAwesomeIcon
+                    icon={faArrowLeft}
+                    className="group-hover:-translate-x-1 transition-transform"
+                  />
+                  Back to Home
+                </button>
+              </div>
               <h2 className="text-3xl font-bold text-green-400 mb-2 flex items-center justify-center gap-2">
-                <FontAwesomeIcon icon={faSignInAlt} className="text-green-500" />
+                <FontAwesomeIcon
+                  icon={faSignInAlt}
+                  className="text-green-500"
+                />
                 Sign In
               </h2>
               <p className="text-gray-300">
@@ -277,9 +314,9 @@ const LoginForm = () => {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FontAwesomeIcon 
-                      icon={identifier.includes("@") ? faEnvelope : faPhone} 
-                      className="h-5 w-5 text-gray-400" 
+                    <FontAwesomeIcon
+                      icon={identifier.includes("@") ? faEnvelope : faPhone}
+                      className="h-5 w-5 text-gray-400"
                     />
                   </div>
                   <input
@@ -301,7 +338,10 @@ const LoginForm = () => {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <FontAwesomeIcon icon={faLock} className="h-5 w-5 text-gray-400" />
+                    <FontAwesomeIcon
+                      icon={faLock}
+                      className="h-5 w-5 text-gray-400"
+                    />
                   </div>
                   <input
                     type={showPassword ? "text" : "password"}
@@ -412,19 +452,39 @@ const LoginForm = () => {
       {/* Add custom CSS for animations */}
       <style jsx>{`
         @keyframes float {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(5deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
+          0% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-10px) rotate(5deg);
+          }
+          100% {
+            transform: translateY(0px) rotate(0deg);
+          }
         }
         @keyframes float-particles {
-          0% { transform: translateY(0) translateX(0); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+          0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-100vh) translateX(20px);
+            opacity: 0;
+          }
         }
         @keyframes shimmer {
-          0% { transform: translateX(-100%) skewX(-12deg); }
-          100% { transform: translateX(200%) skewX(-12deg); }
+          0% {
+            transform: translateX(-100%) skewX(-12deg);
+          }
+          100% {
+            transform: translateX(200%) skewX(-12deg);
+          }
         }
         .animate-float-slow {
           animation: float 8s ease-in-out infinite;

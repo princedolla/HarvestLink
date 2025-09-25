@@ -3,10 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faEye, 
-  faEyeSlash, 
-  faArrowLeft, 
+import {
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
   faUser,
   faPhone,
   faEnvelope,
@@ -17,7 +17,7 @@ import {
   faUserPlus,
   faSignInAlt,
   faChartLine,
-  faTractor // Replaced faFarm with faTractor which is more commonly available
+  faTractor, // Replaced faFarm with faTractor which is more commonly available
 } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterForm = () => {
@@ -52,7 +52,7 @@ const RegisterForm = () => {
     const timer = setTimeout(() => {
       setAnimateText(true);
     }, 300);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -99,12 +99,16 @@ const RegisterForm = () => {
     }
 
     if (!name || !phone || !location || !password) {
-      setError("Please fill in all required fields (Name, Phone, Location, Password).");
+      setError(
+        "Please fill in all required fields (Name, Phone, Location, Password)."
+      );
       return;
     }
 
     if (!/^\+250\d{9}$/.test(phone)) {
-      setError("Please enter a valid Rwandan phone number (e.g. +25078XXXXXXX)");
+      setError(
+        "Please enter a valid Rwandan phone number (e.g. +25078XXXXXXX)"
+      );
       return;
     }
 
@@ -145,19 +149,31 @@ const RegisterForm = () => {
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-yellow-500/5 rounded-full blur-2xl animate-pulse delay-500"></div>
-        
+
         {/* Floating leaves */}
         <div className="absolute top-10 left-10 animate-float-slow">
-          <FontAwesomeIcon icon={faLeaf} className="text-green-400/20 text-4xl rotate-45" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-green-400/20 text-4xl rotate-45"
+          />
         </div>
         <div className="absolute top-20 right-20 animate-float-medium">
-          <FontAwesomeIcon icon={faLeaf} className="text-emerald-400/20 text-3xl -rotate-12" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-emerald-400/20 text-3xl -rotate-12"
+          />
         </div>
         <div className="absolute bottom-20 left-20 animate-float-fast">
-          <FontAwesomeIcon icon={faLeaf} className="text-lime-400/20 text-5xl rotate-30" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-lime-400/20 text-5xl rotate-30"
+          />
         </div>
         <div className="absolute bottom-10 right-10 animate-float-slow">
-          <FontAwesomeIcon icon={faLeaf} className="text-green-400/20 text-2xl -rotate-20" />
+          <FontAwesomeIcon
+            icon={faLeaf}
+            className="text-green-400/20 text-2xl -rotate-20"
+          />
         </div>
       </div>
 
@@ -168,22 +184,36 @@ const RegisterForm = () => {
             {/* Decorative elements */}
             <div className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-green-600/20"></div>
             <div className="absolute -bottom-8 -right-8 w-28 h-28 rounded-full bg-emerald-500/20"></div>
-            
+
             <div className="text-center mb-8 z-10">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-700/30 mb-4">
-                <FontAwesomeIcon icon={faSeedling} className="text-green-300 text-2xl" />
+                <FontAwesomeIcon
+                  icon={faSeedling}
+                  className="text-green-300 text-2xl"
+                />
               </div>
               <h2 className="text-3xl font-bold text-green-100 mb-2">
                 Join Our Farming Community
               </h2>
-              
+
               {/* Animated text with icons */}
               <div className="mt-6 p-4 bg-green-900/40 rounded-lg border border-green-700/30">
                 <div className="flex items-center justify-center mb-2">
-                  <FontAwesomeIcon icon={faChartLine} className="text-green-300 mr-2" />
-                  <span className="text-green-200 font-medium">Dashboard Access</span>
+                  <FontAwesomeIcon
+                    icon={faChartLine}
+                    className="text-green-300 mr-2"
+                  />
+                  <span className="text-green-200 font-medium">
+                    Dashboard Access
+                  </span>
                 </div>
-                <p className={`text-green-200/80 text-sm transition-all duration-1000 ease-in-out transform ${animateText ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                <p
+                  className={`text-green-200/80 text-sm transition-all duration-1000 ease-in-out transform ${
+                    animateText
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-4 opacity-0"
+                  }`}
+                >
                   Create an account to access your dashboard.
                 </p>
               </div>
@@ -197,7 +227,7 @@ const RegisterForm = () => {
                 />
               </div>
             </div>
-            
+
             {/* Decorative corner elements */}
             <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-green-500/50 rounded-tl-2xl"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-green-500/50 rounded-br-2xl"></div>
@@ -207,25 +237,30 @@ const RegisterForm = () => {
           <div className="md:w-3/5 p-8 md:p-10 relative">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                backgroundSize: '120px'
-              }}></div>
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                  backgroundSize: "120px",
+                }}
+              ></div>
             </div>
-            
-            {/* Back Link */}
-            <div className="mb-6">
-              <button
-                type="button"
-                onClick={() => navigate("/")}
-                className="text-green-400 hover:text-green-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3 group"
-              >
-                <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-1 transition-transform" /> 
-                Back to Home
-              </button>
-            </div>
-            
+
             <div className="text-center mb-8 relative z-10">
+              {/* Back Link */}
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => navigate("/")}
+                  className="text-green-400 hover:text-green-300 font-medium flex items-center gap-2 transition-all duration-200 hover:gap-3 group"
+                >
+                  <FontAwesomeIcon
+                    icon={faArrowLeft}
+                    className="group-hover:-translate-x-1 transition-transform"
+                  />
+                  Back to Home
+                </button>
+              </div>
               <h2 className="text-3xl font-bold text-green-400 mb-2 flex items-center justify-center gap-2">
                 <FontAwesomeIcon icon={faUserPlus} className="text-green-500" />
                 Create Account
@@ -271,7 +306,10 @@ const RegisterForm = () => {
                       />
                     ) : (
                       <div className="w-24 h-24 rounded-full bg-gray-700/50 border-4 border-green-800 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                        <FontAwesomeIcon icon={faUser} className="h-10 w-10 text-gray-400" />
+                        <FontAwesomeIcon
+                          icon={faUser}
+                          className="h-10 w-10 text-gray-400"
+                        />
                       </div>
                     )}
                     <label
@@ -308,7 +346,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faUser} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type="text"
@@ -329,7 +370,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faPhone} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faPhone}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type="tel"
@@ -351,7 +395,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faEnvelope} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faEnvelope}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type="email"
@@ -371,7 +418,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faMapMarkerAlt} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faMapMarkerAlt}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type="text"
@@ -392,7 +442,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faTractor} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faTractor}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type="text"
@@ -412,7 +465,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faLock} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faLock}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type={showPassword ? "text" : "password"}
@@ -429,7 +485,9 @@ const RegisterForm = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-300 transition-colors duration-200 focus:outline-none"
                     >
-                      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                      <FontAwesomeIcon
+                        icon={showPassword ? faEyeSlash : faEye}
+                      />
                     </button>
                   </div>
                 </div>
@@ -441,7 +499,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FontAwesomeIcon icon={faLock} className="h-5 w-5 text-gray-400" />
+                      <FontAwesomeIcon
+                        icon={faLock}
+                        className="h-5 w-5 text-gray-400"
+                      />
                     </div>
                     <input
                       type={showConfirmPassword ? "text" : "password"}
@@ -455,10 +516,14 @@ const RegisterForm = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-300 transition-colors duration-200 focus:outline-none"
                     >
-                      <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+                      <FontAwesomeIcon
+                        icon={showConfirmPassword ? faEyeSlash : faEye}
+                      />
                     </button>
                   </div>
                 </div>
@@ -470,7 +535,10 @@ const RegisterForm = () => {
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {cropOptions.map((crop) => (
-                      <label key={crop} className="flex items-center space-x-2 p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700/70 transition-colors duration-200 cursor-pointer">
+                      <label
+                        key={crop}
+                        className="flex items-center space-x-2 p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700/70 transition-colors duration-200 cursor-pointer"
+                      >
                         <input
                           type="checkbox"
                           checked={selectedCrops.includes(crop)}
@@ -546,9 +614,15 @@ const RegisterForm = () => {
       {/* Add custom CSS for animations */}
       <style jsx>{`
         @keyframes float {
-          0% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(5deg); }
-          100% { transform: translateY(0px) rotate(0deg); }
+          0% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-10px) rotate(5deg);
+          }
+          100% {
+            transform: translateY(0px) rotate(0deg);
+          }
         }
         .animate-float-slow {
           animation: float 8s ease-in-out infinite;

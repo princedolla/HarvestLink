@@ -639,10 +639,10 @@ const HomePage = () => {
                   {[
                     { icon: faQuestionCircle, text: "FAQ", link: "/faq" },
                     { icon: faQuestionCircle, text: "Help Center", link: "/help-center" },
-                    { icon: faShieldAlt, text: "Privacy Policy", link: "/privacy" },
-                    { icon: faShieldAlt, text: "Terms of Service", link: "/terms" },
-                    { icon: faShippingFast, text: "Shipping Info", link: "/shipping" },
-                    { icon: faShippingFast, text: "Returns Policy", link: "/returns" }
+                    { icon: faShieldAlt, text: "Privacy Policy", link: "/privacy-policy" },
+                    { icon: faShieldAlt, text: "Terms of Service", link: "/terms-of-service" },
+                    { icon: faShippingFast, text: "Shipping Info", link: "/shipping-info" },
+                    { icon: faShippingFast, text: "Returns Policy", link: "/returns-policy" }
                   ].map((item, index) => (
                     <li key={index}>
                       <Link to={item.link} className="hover:text-green-400 transition-all flex items-center gap-3 py-1">
