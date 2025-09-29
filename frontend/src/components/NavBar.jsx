@@ -434,4 +434,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar; // want to reduce size of logo and reduce size of margin left and nav bar put in center

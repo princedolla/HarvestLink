@@ -282,12 +282,10 @@ const HomePage = () => {
 
       {/* Content Container */}
       <div className="relative z-10">
-        {/* Enhanced Navbar with scroll effects */}
-
         {/* Enhanced Hero Section */}
         <section
           ref={heroRef}
-          className="relative pt-40 pb-32 text-center bg-cover bg-center bg-fixed overflow-hidden"
+          className="relative pt-32 pb-24 text-center bg-cover bg-center bg-fixed overflow-hidden"
           style={{
             backgroundImage:
               "linear-gradient(rgba(3, 7, 18, 0.8), rgba(6, 78, 59, 0.4)), url('/images/farm-field.jpg')",
@@ -301,7 +299,7 @@ const HomePage = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-900/40 backdrop-blur-xl rounded-3xl p-12 border border-emerald-500/20 shadow-2xl shadow-black/50 relative overflow-hidden">
+              <div className="bg-gray-900/40 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 shadow-xl shadow-black/50 relative overflow-hidden">
                 {/* Background pattern */}
                 <div className="absolute inset-0 opacity-5">
                   <div
@@ -314,28 +312,28 @@ const HomePage = () => {
                 </div>
 
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-4 py-2 mb-6">
+                  <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-3 py-1.5 mb-4">
                     <FontAwesomeIcon
                       icon={faStar}
-                      className="text-emerald-400"
+                      className="text-emerald-400 text-xs"
                     />
-                    <span className="text-emerald-300 font-semibold text-sm">
+                    <span className="text-emerald-300 font-semibold text-xs">
                       Trusted by 1,000+ Farmers
                     </span>
                   </div>
 
-                  <h2 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+                  <h2 className="text-4xl md:text-6xl font-bold mb-4 text-white">
                     Welcome to{" "}
                     <span className="bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-300 bg-clip-text text-transparent">
                       HarvestLink
                     </span>
                     <FontAwesomeIcon
                       icon={faLeaf}
-                      className="text-emerald-400 ml-4 inline-block"
+                      className="text-emerald-400 ml-3 inline-block text-2xl"
                     />
                   </h2>
 
-                  <p className="text-xl md:text-2xl text-gray-200 mb-8 flex items-center justify-center gap-3 font-light">
+                  <p className="text-lg md:text-xl text-gray-200 mb-6 flex items-center justify-center gap-2 font-light">
                     <FontAwesomeIcon
                       icon={faHandshake}
                       className="text-emerald-400"
@@ -343,7 +341,7 @@ const HomePage = () => {
                     Connecting farmers directly with buyers worldwide
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                     {[
                       {
                         icon: faTractor,
@@ -366,29 +364,29 @@ const HomePage = () => {
                     ].map((item, index) => (
                       <div
                         key={index}
-                        className="group bg-gray-800/30 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30 hover:border-emerald-400/50 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                        className="group bg-gray-800/30 backdrop-blur-sm p-4 rounded-xl border border-gray-700/30 hover:border-emerald-400/50 transition-all duration-500 hover:transform hover:-translate-y-1 relative overflow-hidden"
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
                         <div
-                          className={`bg-gradient-to-r ${item.color} w-16 h-16 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                          className={`bg-gradient-to-r ${item.color} w-12 h-12 rounded-xl flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300 shadow-lg`}
                         >
                           <FontAwesomeIcon
                             icon={item.icon}
-                            className="text-white text-2xl"
+                            className="text-white text-lg"
                           />
                         </div>
-                        <h3 className="text-white font-semibold text-lg mb-2">
+                        <h3 className="text-white font-semibold text-base mb-1">
                           {item.title}
                         </h3>
-                        <p className="text-gray-300 text-sm">{item.desc}</p>
+                        <p className="text-gray-300 text-xs">{item.desc}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                     <Link
                       to="/login"
-                      className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1 overflow-hidden"
+                      className="group relative px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center gap-2 font-semibold text-base hover:transform hover:-translate-y-0.5 overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                       <FontAwesomeIcon icon={faSignInAlt} />
@@ -400,7 +398,7 @@ const HomePage = () => {
                     </Link>
                     <Link
                       to="/register"
-                      className="group px-8 py-4 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-2xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                      className="group px-6 py-3 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center gap-2 font-semibold text-base hover:transform hover:-translate-y-0.5"
                     >
                       <FontAwesomeIcon icon={faUserPlus} />
                       Join as Farmer
@@ -413,10 +411,10 @@ const HomePage = () => {
         </section>
 
         {/* Enhanced Stats Section */}
-        <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950 relative overflow-hidden">
+        <section className="py-16 bg-gradient-to-b from-gray-900 to-gray-950 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
           <div className="container mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
                   icon: faUser,
@@ -445,21 +443,21 @@ const HomePage = () => {
               ].map((stat, index) => (
                 <div
                   key={index}
-                  className="group text-center p-8 rounded-3xl bg-gray-800/30 backdrop-blur-sm border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                  className="group text-center p-6 rounded-2xl bg-gray-800/30 backdrop-blur-sm border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-1 relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
                   <div
-                    className={`bg-${stat.color}-500/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`bg-${stat.color}-500/10 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-105 transition-transform duration-300`}
                   >
                     <FontAwesomeIcon
                       icon={stat.icon}
-                      className={`text-${stat.color}-400 text-3xl`}
+                      className={`text-${stat.color}-400 text-2xl`}
                     />
                   </div>
-                  <div className="text-4xl font-bold text-white mb-2">
+                  <div className="text-3xl font-bold text-white mb-1">
                     {stat.count}
                   </div>
-                  <div className="text-gray-400 font-semibold">
+                  <div className="text-gray-400 font-semibold text-sm">
                     {stat.label}
                   </div>
                 </div>
@@ -469,70 +467,70 @@ const HomePage = () => {
         </section>
 
         {/* Enhanced Harvest List Section */}
-        <section className="py-20 bg-gray-950 relative overflow-hidden">
+        <section className="py-16 bg-gray-950 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
           <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2 mb-4">
                 <FontAwesomeIcon
                   icon={faSeedling}
-                  className="text-emerald-400"
+                  className="text-emerald-400 text-sm"
                 />
-                <span className="text-emerald-300 font-semibold">
+                <span className="text-emerald-300 font-semibold text-sm">
                   Fresh from the Farm
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                 Featured{" "}
                 <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
                   Harvests
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                 Discover fresh produce directly from local farmers across Rwanda
               </p>
             </div>
 
             {loading ? (
-              <div className="flex justify-center items-center h-64">
+              <div className="flex justify-center items-center h-48">
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faSpinner}
-                    className="text-emerald-400 text-5xl animate-spin mb-4"
+                    className="text-emerald-400 text-4xl animate-spin mb-3"
                   />
-                  <p className="text-gray-300 text-lg">
+                  <p className="text-gray-300 text-base">
                     Loading fresh harvests...
                   </p>
                 </div>
               </div>
             ) : searchLoading ? (
-              <div className="flex justify-center items-center h-64">
+              <div className="flex justify-center items-center h-48">
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faSpinner}
-                    className="text-emerald-400 text-5xl animate-spin mb-4"
+                    className="text-emerald-400 text-4xl animate-spin mb-3"
                   />
-                  <p className="text-gray-300 text-lg">Searching harvests...</p>
+                  <p className="text-gray-300 text-base">Searching harvests...</p>
                 </div>
               </div>
             ) : filteredHarvests.length === 0 && searchQuery ? (
-              <div className="flex justify-center items-center h-64">
+              <div className="flex justify-center items-center h-48">
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faSearch}
-                    className="text-gray-400 text-5xl mb-4"
+                    className="text-gray-400 text-4xl mb-3"
                   />
-                  <p className="text-gray-300 text-xl mb-2">
+                  <p className="text-gray-300 text-lg mb-1">
                     No harvests found
                   </p>
-                  <p className="text-gray-500">Try a different search term</p>
+                  <p className="text-gray-500 text-sm">Try a different search term</p>
                 </div>
               </div>
             ) : (
               <>
                 {searchQuery && (
-                  <div className="mb-8 text-gray-300 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30">
-                    <p className="text-lg">
+                  <div className="mb-6 text-gray-300 bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl border border-gray-700/30">
+                    <p className="text-base">
                       Showing{" "}
                       <span className="text-emerald-400 font-semibold">
                         {filteredHarvests.length}
@@ -557,29 +555,29 @@ const HomePage = () => {
         </section>
 
         {/* Enhanced Features Section */}
-        <section className="py-20 bg-gradient-to-b from-gray-950 to-gray-900 relative overflow-hidden">
+        <section className="py-16 bg-gradient-to-b from-gray-950 to-gray-900 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
           <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
-                <FontAwesomeIcon icon={faAward} className="text-emerald-400" />
-                <span className="text-emerald-300 font-semibold">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2 mb-4">
+                <FontAwesomeIcon icon={faAward} className="text-emerald-400 text-sm" />
+                <span className="text-emerald-300 font-semibold text-sm">
                   Why Choose Us
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                 Why Choose{" "}
                 <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
                   HarvestLink?
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                 We're revolutionizing the way farmers and buyers connect with
                 cutting-edge features
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
                   icon: faRocket,
@@ -620,21 +618,21 @@ const HomePage = () => {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                  className="group bg-gray-800/30 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-1 relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
                   <div
-                    className={`bg-${feature.color}-500/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`bg-${feature.color}-500/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300`}
                   >
                     <FontAwesomeIcon
                       icon={feature.icon}
-                      className={`text-${feature.color}-400 text-2xl`}
+                      className={`text-${feature.color}-400 text-xl`}
                     />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-4">
+                  <h3 className="text-lg font-semibold text-white mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="text-gray-400 leading-relaxed text-sm">
                     {feature.desc}
                   </p>
                 </div>
@@ -644,17 +642,17 @@ const HomePage = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-gray-900 relative overflow-hidden">
+        <section className="py-16 bg-gray-900 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
           <div className="container mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
-                <FontAwesomeIcon icon={faHeart} className="text-emerald-400" />
-                <span className="text-emerald-300 font-semibold">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-2 mb-4">
+                <FontAwesomeIcon icon={faHeart} className="text-emerald-400 text-sm" />
+                <span className="text-emerald-300 font-semibold text-sm">
                   Success Stories
                 </span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                 What Our{" "}
                 <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
                   Users Say
@@ -663,34 +661,34 @@ const HomePage = () => {
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/30 relative overflow-hidden">
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-32 h-32 bg-emerald-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                 <div className="relative z-10">
-                  <div className="text-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
                       <FontAwesomeIcon
                         icon={faUser}
-                        className="text-white text-2xl"
+                        className="text-white text-xl"
                       />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">
+                    <h3 className="text-xl font-bold text-white mb-1">
                       {testimonials[activeTestimonial].name}
                     </h3>
-                    <p className="text-emerald-400 font-semibold">
+                    <p className="text-emerald-400 font-semibold text-sm">
                       {testimonials[activeTestimonial].role}
                     </p>
                   </div>
-                  <p className="text-xl text-gray-300 text-center leading-relaxed italic">
+                  <p className="text-lg text-gray-300 text-center leading-relaxed italic">
                     "{testimonials[activeTestimonial].content}"
                   </p>
-                  <div className="flex justify-center space-x-2 mt-8">
+                  <div className="flex justify-center space-x-2 mt-6">
                     {testimonials.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setActiveTestimonial(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
                           index === activeTestimonial
-                            ? "bg-emerald-400 w-8"
+                            ? "bg-emerald-400 w-6"
                             : "bg-gray-600 hover:bg-gray-500"
                         }`}
                       />
@@ -703,25 +701,25 @@ const HomePage = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 to-emerald-900/20 relative overflow-hidden">
+        <section className="py-16 bg-gradient-to-br from-gray-900 to-emerald-900/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="bg-gray-900/40 backdrop-blur-xl rounded-3xl p-12 border border-emerald-500/20 shadow-2xl">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              <div className="bg-gray-900/40 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/20 shadow-xl">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                   Ready to Grow Your{" "}
                   <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
                     Business?
                   </span>
                 </h2>
-                <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
                   Join thousands of farmers and buyers already using HarvestLink
                   to transform their agricultural business.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
                     to="/register"
-                    className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-2xl shadow-emerald-500/25 flex items-center justify-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                    className="group px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2 font-semibold text-base hover:transform hover:-translate-y-0.5"
                   >
                     <FontAwesomeIcon icon={faUserPlus} />
                     Start Selling Today
@@ -732,7 +730,7 @@ const HomePage = () => {
                   </Link>
                   <Link
                     to="/marketplace"
-                    className="group px-8 py-4 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-2xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center justify-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                    className="group px-6 py-3 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center justify-center gap-2 font-semibold text-base hover:transform hover:-translate-y-0.5"
                   >
                     <FontAwesomeIcon icon={faStore} />
                     Browse Marketplace
@@ -748,13 +746,13 @@ const HomePage = () => {
           <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
             <button
               onClick={closeModal}
-              className="absolute top-6 right-6 text-emerald-400 text-3xl hover:text-emerald-300 bg-gray-900/80 p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
+              className="absolute top-4 right-4 text-emerald-400 text-2xl hover:text-emerald-300 bg-gray-900/80 p-2 rounded-xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>
             <button
               onClick={showPrev}
-              className="absolute left-4 text-white text-2xl hover:text-emerald-400 p-4 bg-gray-900/80 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
+              className="absolute left-2 text-white text-xl hover:text-emerald-400 p-3 bg-gray-900/80 rounded-xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
@@ -762,16 +760,16 @@ const HomePage = () => {
               <img
                 src={`${API_URL}${selectedImages[currentIndex]}`}
                 alt="Harvest Slide"
-                className="max-h-[70vh] sm:max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl"
+                className="max-h-[70vh] sm:max-h-[80vh] max-w-full object-contain rounded-xl shadow-xl"
               />
             </div>
             <button
               onClick={showNext}
-              className="absolute right-4 text-white text-2xl hover:text-emerald-400 p-4 bg-gray-900/80 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
+              className="absolute right-2 text-white text-xl hover:text-emerald-400 p-3 bg-gray-900/80 rounded-xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
-            <div className="absolute bottom-6 text-white text-sm bg-black/70 backdrop-blur-sm px-6 py-3 rounded-2xl border border-gray-600/50">
+            <div className="absolute bottom-4 text-white text-xs bg-black/70 backdrop-blur-sm px-4 py-2 rounded-xl border border-gray-600/50">
               {currentIndex + 1} / {selectedImages.length}
             </div>
           </div>
@@ -780,31 +778,31 @@ const HomePage = () => {
         {/* Enhanced Footer */}
         <footer className="bg-gray-900 text-gray-400 mt-auto border-t border-gray-800 relative overflow-hidden">
           <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:30px_30px]"></div>
-          <div className="container mx-auto px-4 py-16 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <div className="container mx-auto px-4 py-12 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Company Info */}
               <div className="lg:col-span-1">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-gradient-to-br from-emerald-400 to-green-600 p-3 rounded-2xl shadow-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="bg-gradient-to-br from-emerald-400 to-green-600 p-2 rounded-xl shadow-lg">
                     <FontAwesomeIcon
                       icon={faLeaf}
-                      className="text-white text-xl"
+                      className="text-white text-lg"
                     />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">
+                    <h3 className="text-xl font-bold text-white">
                       HarvestLink
                     </h3>
-                    <p className="text-emerald-400 text-sm font-semibold">
+                    <p className="text-emerald-400 text-xs font-semibold">
                       Grow Together
                     </p>
                   </div>
                 </div>
-                <p className="mb-6 text-gray-300 leading-relaxed">
+                <p className="mb-4 text-gray-300 leading-relaxed text-sm">
                   Connecting farmers directly with buyers for a sustainable
                   agricultural future in Rwanda and beyond.
                 </p>
-                <div className="flex space-x-3">
+                <div className="flex space-x-2">
                   {[
                     { icon: faFacebook, color: "blue-500" },
                     { icon: faTwitter, color: "blue-400" },
@@ -816,7 +814,7 @@ const HomePage = () => {
                     <a
                       key={index}
                       href="#"
-                      className="bg-gray-800 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-gray-700 transition-all duration-300 hover:transform hover:-translate-y-1"
+                      className="bg-gray-800 p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-all duration-300 hover:transform hover:-translate-y-0.5 text-sm"
                     >
                       <FontAwesomeIcon icon={social.icon} />
                     </a>
@@ -826,10 +824,10 @@ const HomePage = () => {
 
               {/* Quick Links */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-6">
+                <h3 className="text-base font-semibold text-white mb-4">
                   Quick Links
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   {[
                     { icon: faHome, text: "Home", link: "/" },
                     { icon: faInfoCircle, text: "About Us", link: "/about" },
@@ -845,11 +843,11 @@ const HomePage = () => {
                     <li key={index}>
                       <Link
                         to={item.link}
-                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-3 py-2 group"
+                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 py-1 group text-sm"
                       >
                         <FontAwesomeIcon
                           icon={item.icon}
-                          className="w-4 text-emerald-400 group-hover:scale-110 transition-transform"
+                          className="w-3 text-emerald-400 group-hover:scale-105 transition-transform"
                         />
                         <span>{item.text}</span>
                       </Link>
@@ -860,10 +858,10 @@ const HomePage = () => {
 
               {/* Resources */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-6">
+                <h3 className="text-base font-semibold text-white mb-4">
                   Resources
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   {[
                     { icon: faQuestionCircle, text: "FAQ", link: "/faq" },
                     {
@@ -895,11 +893,11 @@ const HomePage = () => {
                     <li key={index}>
                       <Link
                         to={item.link}
-                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-3 py-2 group"
+                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 py-1 group text-sm"
                       >
                         <FontAwesomeIcon
                           icon={item.icon}
-                          className="w-4 text-emerald-400 group-hover:scale-110 transition-transform"
+                          className="w-3 text-emerald-400 group-hover:scale-105 transition-transform"
                         />
                         <span>{item.text}</span>
                       </Link>
@@ -910,10 +908,10 @@ const HomePage = () => {
 
               {/* Contact Info */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-6">
+                <h3 className="text-base font-semibold text-white mb-4">
                   Contact Us
                 </h3>
-                <ul className="space-y-4">
+                <ul className="space-y-3">
                   {[
                     {
                       icon: faMapMarkerAlt,
@@ -924,10 +922,10 @@ const HomePage = () => {
                     { icon: faGlobe, text: "www.harvestlink.com" },
                     { icon: faWhatsapp, text: "+250 788 123 456" },
                   ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3 group">
+                    <li key={index} className="flex items-start gap-2 group text-sm">
                       <FontAwesomeIcon
                         icon={item.icon}
-                        className="text-emerald-400 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform"
+                        className="text-emerald-400 mt-0.5 flex-shrink-0 group-hover:scale-105 transition-transform"
                       />
                       <span className="text-gray-300 group-hover:text-white transition-colors">
                         {item.text}
@@ -939,11 +937,11 @@ const HomePage = () => {
             </div>
 
             {/* Additional Links Section */}
-            <div className="border-t border-gray-800 pt-12 mb-8">
-              <h3 className="text-lg font-semibold text-white mb-6 text-center">
+            <div className="border-t border-gray-800 pt-8 mb-6">
+              <h3 className="text-base font-semibold text-white mb-4 text-center">
                 More From HarvestLink
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
                 {[
                   { icon: faTractor, text: "For Farmers" },
                   { icon: faStore, text: "For Buyers" },
@@ -955,11 +953,11 @@ const HomePage = () => {
                   <Link
                     key={index}
                     to={`/${item.text.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 text-sm bg-gray-800/50 p-3 rounded-xl justify-center group hover:bg-gray-700/50"
+                    className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-1 text-xs bg-gray-800/50 p-2 rounded-lg justify-center group hover:bg-gray-700/50"
                   >
                     <FontAwesomeIcon
                       icon={item.icon}
-                      className="text-emerald-400 group-hover:scale-110 transition-transform"
+                      className="text-emerald-400 group-hover:scale-105 transition-transform text-xs"
                     />
                     <span>{item.text}</span>
                   </Link>
@@ -968,38 +966,38 @@ const HomePage = () => {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="border-t border-gray-800 pt-12 mb-8">
-              <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+            <div className="border-t border-gray-800 pt-8 mb-6">
+              <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
                 <div className="text-center lg:text-left">
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-xl font-bold text-white mb-2">
                     Stay Updated
                   </h3>
-                  <p className="text-gray-400 max-w-md">
+                  <p className="text-gray-400 max-w-md text-sm">
                     Subscribe to our newsletter for the latest updates on new
                     harvests, market trends, and special offers.
                   </p>
                 </div>
                 <form
                   onSubmit={handleNewsletterSubmit}
-                  className="flex w-full lg:w-auto flex-col sm:flex-row gap-4"
+                  className="flex w-full lg:w-auto flex-col sm:flex-row gap-3"
                 >
                   <div className="relative">
                     <FontAwesomeIcon
                       icon={faEnvelope}
-                      className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-400"
+                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-400 text-sm"
                     />
                     <input
                       type="email"
                       placeholder="Your email address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="bg-gray-800 text-white rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full lg:w-80 border border-gray-700 placeholder-gray-400"
+                      className="bg-gray-800 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full lg:w-64 border border-gray-700 placeholder-gray-400 text-sm"
                       required
                     />
                   </div>
                   <button
                     type="submit"
-                    className="bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl px-8 py-4 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1"
+                    className="bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl px-6 py-3 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:transform hover:-translate-y-0.5 text-sm"
                   >
                     Subscribe
                   </button>
@@ -1008,12 +1006,12 @@ const HomePage = () => {
             </div>
 
             {/* Copyright */}
-            <div className="border-t border-gray-800 pt-8 text-center">
-              <p className="text-gray-400 mb-4">
+            <div className="border-t border-gray-800 pt-6 text-center">
+              <p className="text-gray-400 mb-3 text-sm">
                 &copy; {new Date().getFullYear()} HarvestLink. All rights
                 reserved.
               </p>
-              <div className="flex justify-center space-x-6 text-sm">
+              <div className="flex justify-center space-x-4 text-xs">
                 {["Sitemap", "Accessibility", "Legal", "Cookies"].map(
                   (item) => (
                     <Link
