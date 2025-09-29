@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import React from "react";
+
 import { Link } from "react-router-dom";
 import { API_URL } from "../config";
 import HarvestList from "./HarvestList2";
+import Navbar from "./NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -37,16 +40,20 @@ import {
   faRocket,
   faLightbulb,
   faShieldHeart,
-  faArrowTrendUp
+  faArrowTrendUp,
+  faArrowRight,
+  faStar,
+  faCheckCircle,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { 
-  faFacebook, 
-  faTwitter, 
-  faInstagram, 
-  faLinkedin, 
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+  faLinkedin,
   faYoutube,
   faWhatsapp,
-  faPinterest
+  faPinterest,
 } from "@fortawesome/free-brands-svg-icons";
 
 const HomePage = () => {
@@ -59,7 +66,28 @@ const HomePage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [email, setEmail] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const canvasRef = useRef(null);
+  const heroRef = useRef(null);
+  const testimonialRef = useRef(null);
+
+  // Scroll detection for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Testimonial auto-rotate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchHarvests = async () => {
@@ -78,47 +106,44 @@ const HomePage = () => {
     fetchHarvests();
   }, []);
 
-  // Animated background effect
+  // Enhanced animated background effect
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
+
+    const ctx = canvas.getContext("2d");
     const particles = [];
-    const particleCount = 50;
-    
-    // Set canvas size
+    const particleCount = 80;
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    
+
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Particle class
+    window.addEventListener("resize", resizeCanvas);
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = `rgba(34, 197, 94, ${Math.random() * 0.1 + 0.05})`;
+        this.size = Math.random() * 3 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = `hsla(${120 + Math.random() * 60}, 70%, 50%, ${
+          Math.random() * 0.15 + 0.05
+        })`;
+        this.alpha = Math.random() * 0.1 + 0.05;
       }
-      
+
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        
-        if (this.x > canvas.width || this.x < 0) {
-          this.speedX = -this.speedX;
-        }
-        if (this.y > canvas.height || this.y < 0) {
-          this.speedY = -this.speedY;
-        }
+
+        if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
       }
-      
+
       draw() {
         ctx.fillStyle = this.color;
         ctx.beginPath();
@@ -126,71 +151,72 @@ const HomePage = () => {
         ctx.fill();
       }
     }
-    
-    // Create particles
+
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
-    
-    // Animation loop
+
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+      ctx.fillStyle = "rgba(3, 7, 18, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
-        
-        // Connect particles with lines
+
         for (let j = i; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          if (distance < 100) {
+
+          if (distance < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(34, 197, 94, ${0.1 * (1 - distance/100)})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = `rgba(34, 197, 94, ${
+              0.1 * (1 - distance / 120)
+            })`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
           }
         }
       }
-      
+
       requestAnimationFrame(animate);
     };
-    
+
     animate();
-    
+
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
 
-  // Search function with loading state - Updated to include farmer search
   const handleSearch = async (query) => {
     setSearchQuery(query);
-    
+
     if (!query.trim()) {
       setFilteredHarvests(harvests);
       return;
     }
-    
+
     setSearchLoading(true);
-    
-    // Simulate API call delay for demonstration
+
     setTimeout(() => {
-      const filtered = harvests.filter(harvest => 
-        harvest.name.toLowerCase().includes(query.toLowerCase()) ||
-        harvest.description.toLowerCase().includes(query.toLowerCase()) ||
-        (harvest.farmerName && harvest.farmerName.toLowerCase().includes(query.toLowerCase())) ||
-        (harvest.farmer && harvest.farmer.toLowerCase().includes(query.toLowerCase())) ||
-        (harvest.farmerDetails && harvest.farmerDetails.name && harvest.farmerDetails.name.toLowerCase().includes(query.toLowerCase()))
+      const filtered = harvests.filter(
+        (harvest) =>
+          harvest.name?.toLowerCase().includes(query.toLowerCase()) ||
+          harvest.description?.toLowerCase().includes(query.toLowerCase()) ||
+          harvest.farmerName?.toLowerCase().includes(query.toLowerCase()) ||
+          harvest.farmer?.toLowerCase().includes(query.toLowerCase()) ||
+          harvest.farmerDetails?.name
+            ?.toLowerCase()
+            .includes(query.toLowerCase())
       );
-      
+
       setFilteredHarvests(filtered);
       setSearchLoading(false);
-    }, 800); // Simulate network delay
+    }, 600);
   };
 
   const handleImageClick = (images) => {
@@ -222,267 +248,300 @@ const HomePage = () => {
     setEmail("");
   };
 
+  const testimonials = [
+    {
+      name: "Jean Pierre",
+      role: "Farm Owner",
+      content:
+        "HarvestLink transformed my business! I now reach buyers directly and get better prices for my crops.",
+      avatar: "/images/farmer-1.jpg",
+    },
+    {
+      name: "Marie Claire",
+      role: "Restaurant Owner",
+      content:
+        "The quality of produce from HarvestLink is exceptional. Fresh, direct from farms, and reliable delivery.",
+      avatar: "/images/buyer-1.jpg",
+    },
+    {
+      name: "David Smith",
+      role: "Agricultural Investor",
+      content:
+        "This platform is revolutionizing Rwanda's agricultural sector. Efficient, transparent, and growing fast!",
+      avatar: "/images/investor-1.jpg",
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-950 overflow-hidden relative">
-      {/* Animated Background Canvas */}
-      <canvas 
-        ref={canvasRef} 
+      {/* Enhanced Animated Background */}
+      <canvas
+        ref={canvasRef}
         className="fixed inset-0 w-full h-full pointer-events-none z-0"
       />
-      
+
       {/* Content Container */}
       <div className="relative z-10">
-        {/* Navbar */}
-        <nav className="fixed w-full z-50 bg-gray-900/95 backdrop-blur-md text-white shadow-lg shadow-black/50 border-b border-gray-800">
-          <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="flex items-center gap-2">
-                <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-2 rounded-lg">
-                  <FontAwesomeIcon icon={faLeaf} className="text-white text-xl" />
-                </div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  HarvestLink
-                </h1>
-              </div>
-            </Link>
+        {/* Enhanced Navbar with scroll effects */}
 
-            {/* Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-md mx-4 relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon={faSearch} className="text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search harvests, farmers..."
-                className="w-full bg-gray-800 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 border border-gray-700"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
-              {searchLoading && (
-                <div className="absolute right-3 top-2.5">
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    className="text-green-500 animate-spin"
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
-              <Link
-                to="/"
-                className="px-3 py-2 text-gray-300 hover:text-green-400 transition-all duration-200 hover:bg-gray-800 rounded-lg flex items-center gap-2"
-              >
-                <FontAwesomeIcon icon={faHome} /> Home
-              </Link>
-              <Link
-                to="/register"
-                className="px-3 py-2 text-gray-300 hover:text-green-400 transition-all duration-200 hover:bg-gray-800 rounded-lg flex items-center gap-2"
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> Register
-              </Link>
-              <Link
-                to="/login"
-                className="px-3 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 flex items-center gap-2"
-              >
-                <FontAwesomeIcon icon={faSignInAlt} /> Login
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-gray-300 hover:text-green-400 p-2 rounded-lg hover:bg-gray-800 transition-all"
-              onClick={toggleMobileMenu}
-            >
-              <FontAwesomeIcon icon={faBars} size="lg" />
-            </button>
-          </div>
-
-          {/* Mobile Search Bar */}
-          <div className="md:hidden px-4 pb-3">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon={faSearch} className="text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search harvests, farmers..."
-                className="w-full bg-gray-800 text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 border border-gray-700"
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-              />
-              {searchLoading && (
-                <div className="absolute right-3 top-2.5">
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    className="text-green-500 animate-spin"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-gray-800/95 backdrop-blur-md py-4 px-4 space-y-3 border-t border-gray-700">
-              <Link
-                to="/"
-                className="block hover:text-green-400 flex items-center gap-3 text-gray-300 py-2 px-3 rounded-lg hover:bg-gray-700 transition-all"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <FontAwesomeIcon icon={faHome} /> Home
-              </Link>
-              <Link
-                to="/register"
-                className="block hover:text-green-400 flex items-center gap-3 text-gray-300 py-2 px-3 rounded-lg hover:bg-gray-700 transition-all"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> Register
-              </Link>
-              <Link
-                to="/login"
-                className="block bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 px-3 rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all flex items-center gap-3"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <FontAwesomeIcon icon={faSignInAlt} /> Login
-              </Link>
-            </div>
-          )}
-
-          {/* Announcement Marquee */}
-          <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white overflow-hidden whitespace-nowrap py-2 relative">
-            <div className="inline-block animate-marquee whitespace-nowrap">
-              <span className="mx-4">🌱 New season harvests now available!</span>
-              <span className="mx-4">🚜 Register now to connect directly with farmers</span>
-              <span className="mx-4">⭐ HarvestLink — Empowering Farmers Everywhere!</span>
-            </div>
-          </div>
-        </nav>
-
-        {/* Hero Section with Image Background */}
-        <section className="relative pt-32 pb-20 text-center bg-cover bg-center bg-fixed"
+        {/* Enhanced Hero Section */}
+        <section
+          ref={heroRef}
+          className="relative pt-40 pb-32 text-center bg-cover bg-center bg-fixed overflow-hidden"
           style={{
-            backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(16, 185, 129, 0.3)), url('/images/farm-field.jpg')",
+            backgroundImage:
+              "linear-gradient(rgba(3, 7, 18, 0.8), rgba(6, 78, 59, 0.4)), url('/images/farm-field.jpg')",
           }}
         >
-          <div className="absolute inset-0 bg-black/50"></div>
+          {/* Animated background elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-400/10 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-green-400/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          </div>
+
           <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto">
-              <div className="bg-gray-900/60 backdrop-blur-md rounded-2xl p-8 border border-gray-700/50 shadow-2xl shadow-black/50">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white flex items-center justify-center gap-3">
-                  Welcome to HarvestLink{" "}
-                  <FontAwesomeIcon icon={faLeaf} className="text-green-400" />
-                </h2>
-
-                <p className="text-lg text-gray-200 mb-8 flex items-center justify-center gap-2">
-                  <FontAwesomeIcon icon={faHandshake} className="text-green-400" />{" "}
-                  Connecting farmers directly with buyers
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/30 hover:border-green-400/50 transition-all duration-300">
-                    <FontAwesomeIcon icon={faTractor} className="text-green-400 text-2xl mb-2" />
-                    <h3 className="text-white font-semibold">For Farmers</h3>
-                    <p className="text-gray-300 text-sm">Reach more buyers directly</p>
-                  </div>
-                  <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/30 hover:border-green-400/50 transition-all duration-300">
-                    <FontAwesomeIcon icon={faStore} className="text-green-400 text-2xl mb-2" />
-                    <h3 className="text-white font-semibold">For Buyers</h3>
-                    <p className="text-gray-300 text-sm">Source fresh produce directly</p>
-                  </div>
-                  <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/30 hover:border-green-400/50 transition-all duration-300">
-                    <FontAwesomeIcon icon={faChartLine} className="text-green-400 text-2xl mb-2" />
-                    <h3 className="text-white font-semibold">Track Growth</h3>
-                    <p className="text-gray-300 text-sm">Monitor your farming business</p>
-                  </div>
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-gray-900/40 backdrop-blur-xl rounded-3xl p-12 border border-emerald-500/20 shadow-2xl shadow-black/50 relative overflow-hidden">
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-5">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(34, 197, 94, 0.3) 1px, transparent 0)`,
+                      backgroundSize: "40px 40px",
+                    }}
+                  ></div>
                 </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    to="/login"
-                    className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 transform hover:-translate-y-1"
-                  >
-                    <FontAwesomeIcon icon={faSignInAlt} /> Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="px-6 py-3 bg-gray-800 text-green-400 rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 hover:border-green-400 flex items-center justify-center gap-2 transform hover:-translate-y-1"
-                  >
-                    <FontAwesomeIcon icon={faUserPlus} /> Register
-                  </Link>
+
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-4 py-2 mb-6">
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className="text-emerald-400"
+                    />
+                    <span className="text-emerald-300 font-semibold text-sm">
+                      Trusted by 1,000+ Farmers
+                    </span>
+                  </div>
+
+                  <h2 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+                    Welcome to{" "}
+                    <span className="bg-gradient-to-r from-emerald-300 via-green-400 to-emerald-300 bg-clip-text text-transparent">
+                      HarvestLink
+                    </span>
+                    <FontAwesomeIcon
+                      icon={faLeaf}
+                      className="text-emerald-400 ml-4 inline-block"
+                    />
+                  </h2>
+
+                  <p className="text-xl md:text-2xl text-gray-200 mb-8 flex items-center justify-center gap-3 font-light">
+                    <FontAwesomeIcon
+                      icon={faHandshake}
+                      className="text-emerald-400"
+                    />
+                    Connecting farmers directly with buyers worldwide
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    {[
+                      {
+                        icon: faTractor,
+                        title: "For Farmers",
+                        desc: "Reach more buyers directly",
+                        color: "from-emerald-400 to-green-500",
+                      },
+                      {
+                        icon: faStore,
+                        title: "For Buyers",
+                        desc: "Source fresh produce directly",
+                        color: "from-green-400 to-emerald-500",
+                      },
+                      {
+                        icon: faChartLine,
+                        title: "Track Growth",
+                        desc: "Monitor your farming business",
+                        color: "from-emerald-500 to-green-600",
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="group bg-gray-800/30 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30 hover:border-emerald-400/50 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
+                        <div
+                          className={`bg-gradient-to-r ${item.color} w-16 h-16 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                        >
+                          <FontAwesomeIcon
+                            icon={item.icon}
+                            className="text-white text-2xl"
+                          />
+                        </div>
+                        <h3 className="text-white font-semibold text-lg mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-300 text-sm">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <Link
+                      to="/login"
+                      className="group relative px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-500/40 flex items-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1 overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                      <FontAwesomeIcon icon={faSignInAlt} />
+                      Get Started Now
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        className="group-hover:translate-x-1 transition-transform duration-300"
+                      />
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="group px-8 py-4 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-2xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                    >
+                      <FontAwesomeIcon icon={faUserPlus} />
+                      Join as Farmer
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-12 bg-gradient-to-b from-gray-900 to-gray-950">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 text-center hover:border-green-400/30 transition-all duration-300">
-                <FontAwesomeIcon icon={faUser} className="text-green-400 text-3xl mb-2" />
-                <div className="text-2xl font-bold text-white">1,250+</div>
-                <div className="text-gray-400">Active Farmers</div>
-              </div>
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 text-center hover:border-green-400/30 transition-all duration-300">
-                <FontAwesomeIcon icon={faStore} className="text-green-400 text-3xl mb-2" />
-                <div className="text-2xl font-bold text-white">500+</div>
-                <div className="text-gray-400">Verified Buyers</div>
-              </div>
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 text-center hover:border-green-400/30 transition-all duration-300">
-                <FontAwesomeIcon icon={faSeedling} className="text-green-400 text-3xl mb-2" />
-                <div className="text-2xl font-bold text-white">5,000+</div>
-                <div className="text-gray-400">Harvest Listings</div>
-              </div>
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 text-center hover:border-green-400/30 transition-all duration-300">
-                <FontAwesomeIcon icon={faHandshake} className="text-green-400 text-3xl mb-2" />
-                <div className="text-2xl font-bold text-white">5M+</div>
-                <div className="text-gray-400">Transactions</div>
-              </div>
+        {/* Enhanced Stats Section */}
+        <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: faUser,
+                  count: "1,250+",
+                  label: "Active Farmers",
+                  color: "emerald",
+                },
+                {
+                  icon: faStore,
+                  count: "500+",
+                  label: "Verified Buyers",
+                  color: "green",
+                },
+                {
+                  icon: faSeedling,
+                  count: "5,000+",
+                  label: "Harvest Listings",
+                  color: "emerald",
+                },
+                {
+                  icon: faHandshake,
+                  count: "5M+",
+                  label: "Transactions",
+                  color: "green",
+                },
+              ].map((stat, index) => (
+                <div
+                  key={index}
+                  className="group text-center p-8 rounded-3xl bg-gray-800/30 backdrop-blur-sm border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
+                  <div
+                    className={`bg-${stat.color}-500/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <FontAwesomeIcon
+                      icon={stat.icon}
+                      className={`text-${stat.color}-400 text-3xl`}
+                    />
+                  </div>
+                  <div className="text-4xl font-bold text-white mb-2">
+                    {stat.count}
+                  </div>
+                  <div className="text-gray-400 font-semibold">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Harvest List */}
-        <section className="py-12 bg-gray-950">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl font-bold text-white mb-3">Featured Harvests</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">Discover fresh produce directly from local farmers across Rwanda</p>
-            </div>
-            
-            {loading ? (
-              <div className="flex justify-center items-center h-48">
+        {/* Enhanced Harvest List Section */}
+        <section className="py-20 bg-gray-950 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
                 <FontAwesomeIcon
-                  icon={faSpinner}
-                  className="text-green-500 text-4xl animate-spin"
+                  icon={faSeedling}
+                  className="text-emerald-400"
                 />
+                <span className="text-emerald-300 font-semibold">
+                  Fresh from the Farm
+                </span>
               </div>
-            ) : searchLoading ? (
-              <div className="flex justify-center items-center h-48">
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Featured{" "}
+                <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                  Harvests
+                </span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Discover fresh produce directly from local farmers across Rwanda
+              </p>
+            </div>
+
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faSpinner}
-                    className="text-green-500 text-4xl animate-spin mb-3"
+                    className="text-emerald-400 text-5xl animate-spin mb-4"
                   />
-                  <p className="text-gray-300">Searching harvests...</p>
+                  <p className="text-gray-300 text-lg">
+                    Loading fresh harvests...
+                  </p>
+                </div>
+              </div>
+            ) : searchLoading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="text-center">
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    className="text-emerald-400 text-5xl animate-spin mb-4"
+                  />
+                  <p className="text-gray-300 text-lg">Searching harvests...</p>
                 </div>
               </div>
             ) : filteredHarvests.length === 0 && searchQuery ? (
-              <div className="flex justify-center items-center h-48">
+              <div className="flex justify-center items-center h-64">
                 <div className="text-center">
-                  <p className="text-gray-300 text-xl mb-2">No harvests found</p>
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    className="text-gray-400 text-5xl mb-4"
+                  />
+                  <p className="text-gray-300 text-xl mb-2">
+                    No harvests found
+                  </p>
                   <p className="text-gray-500">Try a different search term</p>
                 </div>
               </div>
             ) : (
               <>
                 {searchQuery && (
-                  <div className="mb-6 text-gray-300 bg-gray-800/50 p-4 rounded-lg">
-                    <p>
-                      Showing {filteredHarvests.length} of {harvests.length} harvests
+                  <div className="mb-8 text-gray-300 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/30">
+                    <p className="text-lg">
+                      Showing{" "}
+                      <span className="text-emerald-400 font-semibold">
+                        {filteredHarvests.length}
+                      </span>{" "}
+                      of{" "}
+                      <span className="text-emerald-400 font-semibold">
+                        {harvests.length}
+                      </span>{" "}
+                      harvests
                       {searchQuery && ` for "${searchQuery}"`}
                     </p>
                   </div>
@@ -497,115 +556,269 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-16 bg-gradient-to-b from-gray-950 to-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-white mb-3">Why Choose HarvestLink?</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">We're revolutionizing the way farmers and buyers connect</p>
+        {/* Enhanced Features Section */}
+        <section className="py-20 bg-gradient-to-b from-gray-950 to-gray-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
+                <FontAwesomeIcon icon={faAward} className="text-emerald-400" />
+                <span className="text-emerald-300 font-semibold">
+                  Why Choose Us
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Why Choose{" "}
+                <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                  HarvestLink?
+                </span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                We're revolutionizing the way farmers and buyers connect with
+                cutting-edge features
+              </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faRocket} className="text-green-400 text-2xl" />
+              {[
+                {
+                  icon: faRocket,
+                  title: "Fast & Direct",
+                  desc: "Connect directly with buyers without intermediaries, reducing costs and time.",
+                  color: "emerald",
+                },
+                {
+                  icon: faShieldHeart,
+                  title: "Secure Transactions",
+                  desc: "Safe and secure payment system ensuring both farmers and buyers are protected.",
+                  color: "green",
+                },
+                {
+                  icon: faLightbulb,
+                  title: "Smart Insights",
+                  desc: "Get valuable insights about market trends and pricing to maximize your profits.",
+                  color: "emerald",
+                },
+                {
+                  icon: faTractor,
+                  title: "Farm Tools",
+                  desc: "Access to agricultural tools and resources to improve your farming practices.",
+                  color: "green",
+                },
+                {
+                  icon: faArrowTrendUp,
+                  title: "Growth Tracking",
+                  desc: "Monitor your sales, trends, and growth with our comprehensive dashboard.",
+                  color: "emerald",
+                },
+                {
+                  icon: faUsers,
+                  title: "Community Support",
+                  desc: "Join a thriving community of farmers and buyers supporting each other.",
+                  color: "green",
+                },
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="group bg-gray-800/30 backdrop-blur-sm p-8 rounded-3xl border border-gray-700/30 hover:border-emerald-400/30 transition-all duration-500 hover:transform hover:-translate-y-2 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-green-500/0 group-hover:from-emerald-500/5 group-hover:to-green-500/10 transition-all duration-500"></div>
+                  <div
+                    className={`bg-${feature.color}-500/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <FontAwesomeIcon
+                      icon={feature.icon}
+                      className={`text-${feature.color}-400 text-2xl`}
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed">
+                    {feature.desc}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Fast & Direct</h3>
-                <p className="text-gray-400">Connect directly with buyers without intermediaries, reducing costs and time.</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-20 bg-gray-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl px-6 py-3 mb-6">
+                <FontAwesomeIcon icon={faHeart} className="text-emerald-400" />
+                <span className="text-emerald-300 font-semibold">
+                  Success Stories
+                </span>
               </div>
-              
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faShieldHeart} className="text-green-400 text-2xl" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                What Our{" "}
+                <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                  Users Say
+                </span>
+              </h2>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-3xl p-8 border border-gray-700/30 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-32 h-32 bg-emerald-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                <div className="relative z-10">
+                  <div className="text-center mb-8">
+                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        className="text-white text-2xl"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      {testimonials[activeTestimonial].name}
+                    </h3>
+                    <p className="text-emerald-400 font-semibold">
+                      {testimonials[activeTestimonial].role}
+                    </p>
+                  </div>
+                  <p className="text-xl text-gray-300 text-center leading-relaxed italic">
+                    "{testimonials[activeTestimonial].content}"
+                  </p>
+                  <div className="flex justify-center space-x-2 mt-8">
+                    {testimonials.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveTestimonial(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          index === activeTestimonial
+                            ? "bg-emerald-400 w-8"
+                            : "bg-gray-600 hover:bg-gray-500"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Secure Transactions</h3>
-                <p className="text-gray-400">Safe and secure payment system ensuring both farmers and buyers are protected.</p>
-              </div>
-              
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faLightbulb} className="text-green-400 text-2xl" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Smart Insights</h3>
-                <p className="text-gray-400">Get valuable insights about market trends and pricing to maximize your profits.</p>
-              </div>
-              
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faTractor} className="text-green-400 text-2xl" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Farm Tools</h3>
-                <p className="text-gray-400">Access to agricultural tools and resources to improve your farming practices.</p>
-              </div>
-              
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faArrowTrendUp} className="text-green-400 text-2xl" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Growth Tracking</h3>
-                <p className="text-gray-400">Monitor your sales, trends, and growth with our comprehensive dashboard.</p>
-              </div>
-              
-              <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700/30 hover:border-green-400/30 transition-all duration-300 transform hover:-translate-y-2">
-                <div className="bg-green-400/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <FontAwesomeIcon icon={faUsers} className="text-green-400 text-2xl" />
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Community Support</h3>
-                <p className="text-gray-400">Join a thriving community of farmers and buyers supporting each other.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Modal Slideshow */}
+        {/* CTA Section */}
+        <section className="py-20 bg-gradient-to-br from-gray-900 to-emerald-900/20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="bg-gray-900/40 backdrop-blur-xl rounded-3xl p-12 border border-emerald-500/20 shadow-2xl">
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                  Ready to Grow Your{" "}
+                  <span className="bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                    Business?
+                  </span>
+                </h2>
+                <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                  Join thousands of farmers and buyers already using HarvestLink
+                  to transform their agricultural business.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link
+                    to="/register"
+                    className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-2xl shadow-emerald-500/25 flex items-center justify-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                  >
+                    <FontAwesomeIcon icon={faUserPlus} />
+                    Start Selling Today
+                    <FontAwesomeIcon
+                      icon={faArrowRight}
+                      className="group-hover:translate-x-1 transition-transform duration-300"
+                    />
+                  </Link>
+                  <Link
+                    to="/marketplace"
+                    className="group px-8 py-4 bg-gray-800/50 backdrop-blur-sm text-emerald-400 rounded-2xl hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-emerald-400 flex items-center justify-center gap-3 font-semibold text-lg hover:transform hover:-translate-y-1"
+                  >
+                    <FontAwesomeIcon icon={faStore} />
+                    Browse Marketplace
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Enhanced Modal Slideshow */}
         {selectedImages.length > 0 && (
-          <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
             <button
               onClick={closeModal}
-              className="absolute top-5 right-5 text-green-500 text-3xl hover:text-green-400 bg-gray-900/80 p-2 rounded-full"
+              className="absolute top-6 right-6 text-emerald-400 text-3xl hover:text-emerald-300 bg-gray-900/80 p-3 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>
             <button
               onClick={showPrev}
-              className="absolute left-2 sm:left-5 text-white text-2xl sm:text-3xl hover:text-green-400 p-2 sm:p-4 bg-gray-900/80 rounded-full"
+              className="absolute left-4 text-white text-2xl hover:text-emerald-400 p-4 bg-gray-900/80 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <img
-              src={`${API_URL}${selectedImages[currentIndex]}`}
-              alt="Harvest Slide"
-              className="max-h-[70vh] sm:max-h-[80vh] max-w-[90vw] object-contain rounded-lg"
-            />
+            <div className="relative max-w-6xl max-h-[85vh] flex items-center justify-center">
+              <img
+                src={`${API_URL}${selectedImages[currentIndex]}`}
+                alt="Harvest Slide"
+                className="max-h-[70vh] sm:max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl"
+              />
+            </div>
             <button
               onClick={showNext}
-              className="absolute right-2 sm:right-5 text-white text-2xl sm:text-3xl hover:text-green-400 p-2 sm:p-4 bg-gray-900/80 rounded-full"
+              className="absolute right-4 text-white text-2xl hover:text-emerald-400 p-4 bg-gray-900/80 rounded-2xl backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/80 z-10"
             >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
-            <div className="absolute bottom-5 text-white text-sm bg-black/70 px-4 py-2 rounded-full">
+            <div className="absolute bottom-6 text-white text-sm bg-black/70 backdrop-blur-sm px-6 py-3 rounded-2xl border border-gray-600/50">
               {currentIndex + 1} / {selectedImages.length}
             </div>
           </div>
         )}
 
         {/* Enhanced Footer */}
-        <footer className="bg-gray-900 text-gray-400 mt-auto border-t border-gray-800">
-          <div className="container mx-auto px-4 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <footer className="bg-gray-900 text-gray-400 mt-auto border-t border-gray-800 relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.01] bg-[size:30px_30px]"></div>
+          <div className="container mx-auto px-4 py-16 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
               {/* Company Info */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-2 rounded-lg">
-                    <FontAwesomeIcon icon={faLeaf} className="text-white text-xl" />
+              <div className="lg:col-span-1">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="bg-gradient-to-br from-emerald-400 to-green-600 p-3 rounded-2xl shadow-lg">
+                    <FontAwesomeIcon
+                      icon={faLeaf}
+                      className="text-white text-xl"
+                    />
                   </div>
-                  <h3 className="text-xl font-semibold text-white">HarvestLink</h3>
+                  <div>
+                    <h3 className="text-2xl font-bold text-white">
+                      HarvestLink
+                    </h3>
+                    <p className="text-emerald-400 text-sm font-semibold">
+                      Grow Together
+                    </p>
+                  </div>
                 </div>
-                <p className="mb-6">Connecting farmers directly with buyers for a sustainable agricultural future.</p>
+                <p className="mb-6 text-gray-300 leading-relaxed">
+                  Connecting farmers directly with buyers for a sustainable
+                  agricultural future in Rwanda and beyond.
+                </p>
                 <div className="flex space-x-3">
-                  {[faFacebook, faTwitter, faInstagram, faLinkedin, faYoutube, faWhatsapp].map((icon, index) => (
-                    <a key={index} href="#" className="bg-gray-800 p-2 rounded-lg text-gray-400 hover:text-green-400 hover:bg-gray-700 transition-all">
-                      <FontAwesomeIcon icon={icon} />
+                  {[
+                    { icon: faFacebook, color: "blue-500" },
+                    { icon: faTwitter, color: "blue-400" },
+                    { icon: faInstagram, color: "pink-500" },
+                    { icon: faLinkedin, color: "blue-600" },
+                    { icon: faYoutube, color: "red-500" },
+                    { icon: faWhatsapp, color: "green-500" },
+                  ].map((social, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="bg-gray-800 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-gray-700 transition-all duration-300 hover:transform hover:-translate-y-1"
+                    >
+                      <FontAwesomeIcon icon={social.icon} />
                     </a>
                   ))}
                 </div>
@@ -613,19 +826,32 @@ const HomePage = () => {
 
               {/* Quick Links */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Quick Links</h3>
+                <h3 className="text-lg font-semibold text-white mb-6">
+                  Quick Links
+                </h3>
                 <ul className="space-y-3">
                   {[
                     { icon: faHome, text: "Home", link: "/" },
                     { icon: faInfoCircle, text: "About Us", link: "/about" },
                     { icon: faSeedling, text: "Services", link: "/services" },
-                    { icon: faStore, text: "Marketplace", link: "/marketplace" },
+                    {
+                      icon: faStore,
+                      text: "Marketplace",
+                      link: "/marketplace",
+                    },
                     { icon: faNewspaper, text: "Blog", link: "/blog" },
-                    { icon: faEnvelope, text: "Contact", link: "/contact" }
+                    { icon: faEnvelope, text: "Contact", link: "/contact" },
                   ].map((item, index) => (
                     <li key={index}>
-                      <Link to={item.link} className="hover:text-green-400 transition-all flex items-center gap-3 py-1">
-                        <FontAwesomeIcon icon={item.icon} className="w-4" /> {item.text}
+                      <Link
+                        to={item.link}
+                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-3 py-2 group"
+                      >
+                        <FontAwesomeIcon
+                          icon={item.icon}
+                          className="w-4 text-emerald-400 group-hover:scale-110 transition-transform"
+                        />
+                        <span>{item.text}</span>
                       </Link>
                     </li>
                   ))}
@@ -634,19 +860,48 @@ const HomePage = () => {
 
               {/* Resources */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Resources</h3>
+                <h3 className="text-lg font-semibold text-white mb-6">
+                  Resources
+                </h3>
                 <ul className="space-y-3">
                   {[
                     { icon: faQuestionCircle, text: "FAQ", link: "/faq" },
-                    { icon: faQuestionCircle, text: "Help Center", link: "/help-center" },
-                    { icon: faShieldAlt, text: "Privacy Policy", link: "/privacy-policy" },
-                    { icon: faShieldAlt, text: "Terms of Service", link: "/terms-of-service" },
-                    { icon: faShippingFast, text: "Shipping Info", link: "/shipping-info" },
-                    { icon: faShippingFast, text: "Returns Policy", link: "/returns-policy" }
+                    {
+                      icon: faQuestionCircle,
+                      text: "Help Center",
+                      link: "/help-center",
+                    },
+                    {
+                      icon: faShieldAlt,
+                      text: "Privacy Policy",
+                      link: "/privacy-policy",
+                    },
+                    {
+                      icon: faShieldAlt,
+                      text: "Terms of Service",
+                      link: "/terms-of-service",
+                    },
+                    {
+                      icon: faShippingFast,
+                      text: "Shipping Info",
+                      link: "/shipping-info",
+                    },
+                    {
+                      icon: faShippingFast,
+                      text: "Returns Policy",
+                      link: "/returns-policy",
+                    },
                   ].map((item, index) => (
                     <li key={index}>
-                      <Link to={item.link} className="hover:text-green-400 transition-all flex items-center gap-3 py-1">
-                        <FontAwesomeIcon icon={item.icon} className="w-4" /> {item.text}
+                      <Link
+                        to={item.link}
+                        className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-3 py-2 group"
+                      >
+                        <FontAwesomeIcon
+                          icon={item.icon}
+                          className="w-4 text-emerald-400 group-hover:scale-110 transition-transform"
+                        />
+                        <span>{item.text}</span>
                       </Link>
                     </li>
                   ))}
@@ -655,18 +910,28 @@ const HomePage = () => {
 
               {/* Contact Info */}
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4">Contact Us</h3>
-                <ul className="space-y-3">
+                <h3 className="text-lg font-semibold text-white mb-6">
+                  Contact Us
+                </h3>
+                <ul className="space-y-4">
                   {[
-                    { icon: faMapMarkerAlt, text: "123 Farm Road, Agricultural District, Kigali, Rwanda" },
+                    {
+                      icon: faMapMarkerAlt,
+                      text: "123 Farm Road, Agricultural District, Kigali, Rwanda",
+                    },
                     { icon: faPhone, text: "+250 788 123 456" },
                     { icon: faEnvelope, text: "info@harvestlink.com" },
                     { icon: faGlobe, text: "www.harvestlink.com" },
-                    { icon: faWhatsapp, text: "+250 788 123 456" }
+                    { icon: faWhatsapp, text: "+250 788 123 456" },
                   ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <FontAwesomeIcon icon={item.icon} className="text-green-500 mt-1 flex-shrink-0" />
-                      <span>{item.text}</span>
+                    <li key={index} className="flex items-start gap-3 group">
+                      <FontAwesomeIcon
+                        icon={item.icon}
+                        className="text-emerald-400 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform"
+                      />
+                      <span className="text-gray-300 group-hover:text-white transition-colors">
+                        {item.text}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -674,8 +939,10 @@ const HomePage = () => {
             </div>
 
             {/* Additional Links Section */}
-            <div className="border-t border-gray-800 mt-8 pt-8">
-              <h3 className="text-lg font-semibold text-white mb-4 text-center">More From HarvestLink</h3>
+            <div className="border-t border-gray-800 pt-12 mb-8">
+              <h3 className="text-lg font-semibold text-white mb-6 text-center">
+                More From HarvestLink
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {[
                   { icon: faTractor, text: "For Farmers" },
@@ -683,32 +950,57 @@ const HomePage = () => {
                   { icon: faBriefcase, text: "Careers" },
                   { icon: faHandshake, text: "Partners" },
                   { icon: faChartLine, text: "Investors" },
-                  { icon: faUsers, text: "Community" }
+                  { icon: faUsers, text: "Community" },
                 ].map((item, index) => (
-                  <Link key={index} to={`/${item.text.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-green-400 transition-all flex items-center gap-2 text-sm bg-gray-800/50 p-2 rounded-lg justify-center">
-                    <FontAwesomeIcon icon={item.icon} /> {item.text}
+                  <Link
+                    key={index}
+                    to={`/${item.text.toLowerCase().replace(/\s+/g, "-")}`}
+                    className="hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 text-sm bg-gray-800/50 p-3 rounded-xl justify-center group hover:bg-gray-700/50"
+                  >
+                    <FontAwesomeIcon
+                      icon={item.icon}
+                      className="text-emerald-400 group-hover:scale-110 transition-transform"
+                    />
+                    <span>{item.text}</span>
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="border-t border-gray-800 mt-8 pt-8">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="text-center md:text-left">
-                  <h3 className="text-lg font-semibold text-white mb-2">Subscribe to Our Newsletter</h3>
-                  <p className="text-sm text-gray-400">Get the latest updates on new harvests and special offers</p>
+            <div className="border-t border-gray-800 pt-12 mb-8">
+              <div className="flex flex-col lg:flex-row justify-between items-center gap-8">
+                <div className="text-center lg:text-left">
+                  <h3 className="text-2xl font-bold text-white mb-3">
+                    Stay Updated
+                  </h3>
+                  <p className="text-gray-400 max-w-md">
+                    Subscribe to our newsletter for the latest updates on new
+                    harvests, market trends, and special offers.
+                  </p>
                 </div>
-                <form onSubmit={handleNewsletterSubmit} className="flex w-full md:w-auto">
-                  <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-gray-800 text-white rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 w-full md:w-64 border border-gray-700"
-                    required
-                  />
-                  <button type="submit" className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-r-lg px-4 py-2 hover:from-green-700 hover:to-emerald-700 transition-all">
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="flex w-full lg:w-auto flex-col sm:flex-row gap-4"
+                >
+                  <div className="relative">
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-400"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="bg-gray-800 text-white rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full lg:w-80 border border-gray-700 placeholder-gray-400"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl px-8 py-4 hover:from-emerald-600 hover:to-green-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:transform hover:-translate-y-1"
+                  >
                     Subscribe
                   </button>
                 </form>
@@ -716,28 +1008,28 @@ const HomePage = () => {
             </div>
 
             {/* Copyright */}
-            <div className="border-t border-gray-800 mt-8 pt-6 text-center">
-              <p>&copy; {new Date().getFullYear()} HarvestLink. All rights reserved.</p>
-              <div className="flex justify-center space-x-6 mt-2 text-sm">
-                <Link to="/sitemap" className="hover:text-green-400 transition-all">Sitemap</Link>
-                <Link to="/accessibility" className="hover:text-green-400 transition-all">Accessibility</Link>
-                <Link to="/legal" className="hover:text-green-400 transition-all">Legal</Link>
+            <div className="border-t border-gray-800 pt-8 text-center">
+              <p className="text-gray-400 mb-4">
+                &copy; {new Date().getFullYear()} HarvestLink. All rights
+                reserved.
+              </p>
+              <div className="flex justify-center space-x-6 text-sm">
+                {["Sitemap", "Accessibility", "Legal", "Cookies"].map(
+                  (item) => (
+                    <Link
+                      key={item}
+                      to={`/${item.toLowerCase()}`}
+                      className="hover:text-emerald-400 transition-all duration-300"
+                    >
+                      {item}
+                    </Link>
+                  )
+                )}
               </div>
             </div>
           </div>
         </footer>
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee {
-          animation: marquee 20s linear infinite;
-        }
-      `}</style>
     </div>
   );
 };

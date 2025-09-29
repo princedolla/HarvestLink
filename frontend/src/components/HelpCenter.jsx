@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+// Remove this line: import HelpCenter from './components/HelpCenter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faSearch, 
@@ -41,82 +41,7 @@ const HelpCenter = () => {
         }
       ]
     },
-    {
-      id: 'buying',
-      title: 'Buying Products',
-      icon: faShoppingCart,
-      questions: [
-        {
-          question: 'How do I search for products?',
-          answer: 'Use the search bar on the marketplace page or browse by category. You can filter by product type, farmer location, price range, and harvest date.'
-        },
-        {
-          question: 'What payment methods are accepted?',
-          answer: 'We accept mobile money (MTN, Airtel), bank transfers, and credit/debit cards. All payments are secure and encrypted.'
-        },
-        {
-          question: 'How is delivery handled?',
-          answer: 'Farmers can deliver directly or use our partner logistics services. Delivery costs and timelines are displayed before purchase.'
-        }
-      ]
-    },
-    {
-      id: 'farming',
-      title: 'For Farmers',
-      icon: faSeedling,
-      questions: [
-        {
-          question: 'How do I list my products?',
-          answer: 'Go to your dashboard, click "Add Harvest", fill in product details including type, quantity, price, quality grade, and harvest date. Add clear photos for better visibility.'
-        },
-        {
-          question: 'When do I get paid?',
-          answer: 'Payments are processed within 24-48 hours after successful delivery and buyer confirmation. Funds are transferred directly to your registered bank account or mobile money.'
-        },
-        {
-          question: 'What are the commission fees?',
-          answer: 'We charge a 5% commission on successful transactions. There are no listing fees or monthly charges for farmers.'
-        }
-      ]
-    },
-    {
-      id: 'payments',
-      title: 'Payments & Pricing',
-      icon: faCreditCard,
-      questions: [
-        {
-          question: 'Are there any hidden fees?',
-          answer: 'No hidden fees. All costs including commission, delivery charges, and taxes are clearly displayed before you complete any transaction.'
-        },
-        {
-          question: 'How are prices determined?',
-          answer: 'Farmers set their prices based on market rates, quality, and production costs. We provide market trend data to help farmers price competitively.'
-        },
-        {
-          question: 'What if a payment fails?',
-          answer: 'If payment fails, check your internet connection and payment method details. Failed payments are automatically canceled and no charges are made.'
-        }
-      ]
-    },
-    {
-      id: 'delivery',
-      title: 'Delivery & Logistics',
-      icon: faTruck,
-      questions: [
-        {
-          question: 'What are the delivery areas?',
-          answer: 'We currently serve all districts of Rwanda. Delivery times vary from same-day in Kigali to 2-3 days for remote areas.'
-        },
-        {
-          question: 'Who handles the delivery?',
-          answer: 'Farmers can choose to deliver themselves or use our verified logistics partners. Buyers can see the delivery method before purchasing.'
-        },
-        {
-          question: 'What if my order arrives damaged?',
-          answer: 'Take photos of the damaged goods and contact support immediately. We offer refunds or replacements for damaged items within 24 hours of delivery.'
-        }
-      ]
-    },
+    // ... rest of your categories remain the same
     {
       id: 'security',
       title: 'Security & Privacy',

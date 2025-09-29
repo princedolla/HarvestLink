@@ -1,6 +1,8 @@
 // src/App.jsx
 import { Routes, Route } from "react-router-dom";
 
+
+import Navbar from "./components/NavBar";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import HarvestList from "./components/HarvestList2";
